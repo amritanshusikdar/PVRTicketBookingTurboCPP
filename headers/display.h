@@ -1,0 +1,70 @@
+/* 
+    All front end "To be displayed on screen" functions are defined here
+    Eg: welcomeScreen, loadingScreen, viewEmptySeats, etc.
+ */
+
+#include <iostream.h>
+#include <conio.h>
+#include <dos.h>
+
+const int loadWaitDelay = 40;
+
+void welcomeScreen(char* message) {
+    clrscr();
+    cout << message << endl;
+}
+
+int loginMenu(void) {
+    int choice;
+
+    cout << "Main Menu!\n";
+
+    cout << "1. Login\n2. Register\n3. Continue As Guest\n";
+    cin >> choice;
+
+    return choice;
+}
+
+void loadWait(char *phrase) {
+    clrscr();
+
+    cout << phrase << endl;
+    int i=4;
+    int x=-1, y=3;
+
+    cout << "Loading...";
+
+    while(i <= 100) {
+        gotoxy(12,2);
+        cout << '\\' << (char) 8;   // Printing backspace character --- ASCII = 8
+        delay(loadWaitDelay);
+        cout << '|' << (char) 8;
+        delay(loadWaitDelay);
+        cout << '/' << (char) 8;
+        delay(loadWaitDelay);
+        cout << '-' << (char) 8;
+        delay(loadWaitDelay);
+
+        gotoxy(x+=2,y);
+
+        if(i <= 30)
+            cout << (char) 176 << (char) 176;
+        else if(i <= 60)
+            cout << (char) 177 << (char) 177;
+        else
+            cout << (char) 178 << (char) 178;
+
+        gotoxy(30,3);
+        cout << i << '%';
+
+        i+=8;
+    }
+
+    cout << endl << "Loaded";
+    delay(60);
+
+}
+
+void goodBye(void) {
+    cout << "\n\nThanks for Visiting!\n\n";
+}
