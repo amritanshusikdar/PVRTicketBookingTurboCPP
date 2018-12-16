@@ -6,6 +6,8 @@
 
 
 #include <stdlib.h>
+#include <time.h>
+#include <iostream.h>
 
 
 const char ticketHash[37] = "0123456789"
@@ -30,14 +32,18 @@ class Manager : public Administrator {
 char* Administrator::ticketIDGenerator() {
     
     int index;
-    char ID[5];
+    char ID[6];
 
-    randomize();
+    srand(time(NULL));
     
     for(int i=0; i<5; i++) {
-        index = random(37);
+        index = rand() % 37;
         *(ID+index) = *(ticketHash+index);
     }
 
-    return ID;
+    *(ID+5) = '\0';
+
+    cout << ID;
+
+    return (char*)ID;
 }

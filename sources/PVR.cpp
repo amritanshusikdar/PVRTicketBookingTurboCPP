@@ -21,15 +21,15 @@
 //  START OF main()
 int main() {
 
-    welcomeScreen("Hey there!");
-    loginMenu();
-    loadWait("Damnson!");
-    goodBye();
+    // welcomeScreen("Hey there!");
+    // loginMenu();
+    // loadWait("Damnson!");
+    // goodBye();
 
-    getch();
+    // getch();
 
     Administrator nigga;
-    char *something = nigga.ticketIDGenerator();
+    char *something = (char*)nigga.ticketIDGenerator();
     cout << something;
     cout << nigga.ticketIDGenerator();
 
