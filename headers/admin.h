@@ -10,15 +10,19 @@
 #include <iostream.h>
 
 
-const char ticketHash[37] = "0123456789"
+static const char ticketHash[37] = "0123456789"
                             "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+char ticketID[9];
 
 class Administrator {
     private:
     protected:
     public:
     //  Generates random TicketIDs using 0-9 and A-Z characters
-        char *ticketIDGenerator();
+        void ticketIDGenerator();
+
+        ~Administrator() {
+        }
 };
 
 class Manager : public Administrator {
@@ -29,21 +33,12 @@ class Manager : public Administrator {
 
 //  Class Function Definitions   //
 
-char* Administrator::ticketIDGenerator() {
-    
-    int index;
-    char ID[6];
-
+void Administrator::ticketIDGenerator() {
     srand(time(NULL));
     
-    for(int i=0; i<5; i++) {
-        index = rand() % 37;
-        *(ID+index) = *(ticketHash+index);
+    for(int i=0; i<9; i++) {
+        *(ticketID+i) = *(ticketHash + (rand()%37));
     }
 
-    *(ID+5) = '\0';
-
-    cout << ID;
-
-    return (char*)ID;
+    *(ticketID+8) = '\0';
 }

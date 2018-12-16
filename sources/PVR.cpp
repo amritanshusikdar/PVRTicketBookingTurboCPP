@@ -20,20 +20,22 @@
 
 //  START OF main()
 int main() {
+    clrscr();
 
-    // welcomeScreen("Hey there!");
-    // loginMenu();
-    // loadWait("Damnson!");
-    // goodBye();
-
-    // getch();
+    welcomeScreen("Hey there!");
+    loginMenu();
+    loadWait("Damnson!");
+    goodBye();
 
     Administrator nigga;
-    char *something = (char*)nigga.ticketIDGenerator();
-    cout << something;
-    cout << nigga.ticketIDGenerator();
+
+    cout << "Dictionary: \n" << ticketHash << endl;
+
+    nigga.ticketIDGenerator();
+    cout << "ID: \n" << ticketID << endl;
 
     getch();
+
     return 0;
 }
 
