@@ -27,13 +27,6 @@ int main() {
     loadWait("Damnson!");
     goodBye();
 
-    Administrator nigga;
-
-    cout << "Dictionary: \n" << ticketHash << endl;
-
-    nigga.ticketIDGenerator();
-    cout << "ID: \n" << ticketID << endl;
-
     getch();
 
     return 0;
