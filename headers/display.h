@@ -6,6 +6,7 @@
 #include <iostream.h>
 #include <conio.h>
 #include <dos.h>
+#include <string.h>
 
 const int loadWaitDelay = 40;
 
@@ -15,22 +16,26 @@ void welcomeScreen(char* message) {
 }
 
 // Returns Choice //
-int loginMenu(){
+int loginMenu() {
+
 	clrscr();
+
+    //  Starting the drawing  //
+
 	cout << "\n\n\n\n\n\n";
 	cout << "\t\t\t*-------------------------*";
-	for(int i=0; i<9; i++){
-		switch(i){
+	for(size_t i=0; i<9; i++) {
+		switch(i) {
 			case 0:
-				cout << "\n\t\t\t|\t ---------\t  |";
+				cout << "\n\t\t\t|\t ==========\t  |";
 			break;
 
 			case 1:
-				cout << "\n\t\t\t|\t PVR Sikka\t  |";
+				cout << "\n\t\t\t|\t LOGIN MENU\t  |";
 			break;
 
 			case 2:
-				cout << "\n\t\t\t|\t ---------\t  |";
+				cout << "\n\t\t\t|\t ==========\t  |";
 			break;
 
 			case 4:
@@ -58,17 +63,22 @@ int loginMenu(){
 	cout << "\t\t\t   Enter your choice: "; return getch();
 }
 
+
+
 void loadWait(char *phrase) {
     clrscr();
 
-    cout << phrase << endl;
     int i=4;
-    int x=-1, y=3;
+    int x=26, y=13;
 
+    gotoxy((80-strlen(phrase))/2,y-2);
+    cout << phrase << endl;
+
+    gotoxy(35,y-1);
     cout << "Loading...";
 
     while(i <= 100) {
-        gotoxy(12,2);
+        gotoxy(48,12);
         cout << '\\' << (char) 8;   // Printing backspace character --- ASCII = 8
         delay(loadWaitDelay);
         cout << '|' << (char) 8;
@@ -78,7 +88,8 @@ void loadWait(char *phrase) {
         cout << '-' << (char) 8;
         delay(loadWaitDelay);
 
-        gotoxy(x+=2,y);
+        gotoxy(x,y+1);
+        x+=2;
 
         if(i <= 30)
             cout << (char) 176 << (char) 176;
@@ -87,16 +98,15 @@ void loadWait(char *phrase) {
         else
             cout << (char) 178 << (char) 178;
 
-        gotoxy(30,3);
+        gotoxy(55,14);
         cout << i << '%';
 
         i+=8;
     }
 
-    cout << endl << "Loaded";
-    delay(60);
-
+    delay(100);
 }
+
 
 void goodBye(void) {
     cout << "\n\nThanks for Visiting!\n\n";

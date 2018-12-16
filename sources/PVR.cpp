@@ -14,16 +14,24 @@
 
 
 
-#include <admin.h>
-#include <display.h>
+#include "admin.h"
+#include "display.h"
 
 
 //  START OF main()
 int main() {
 
     welcomeScreen("Hey there!");
+    loginMenu();
     loadWait("Damnson!");
     goodBye();
+
+    getch();
+
+    Administrator nigga;
+    char *something = nigga.ticketIDGenerator();
+    cout << something;
+    cout << nigga.ticketIDGenerator();
 
     getch();
     return 0;
