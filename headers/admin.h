@@ -12,18 +12,15 @@
 
 static const char ticketHash[37] = "0123456789"
                             "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                            
 
 class Administrator {
     private:
         char *ticketID;
     protected:
     public:
+
     //  Generates random TicketIDs using 0-9 and A-Z characters
         char* ticketIDGenerator();
-
-        ~Administrator() {
-        }
 };
 
 class Manager : public Administrator {
@@ -35,10 +32,16 @@ class Manager : public Administrator {
 //  Class Function Definitions   //
 
 char* Administrator::ticketIDGenerator() {
+
+    ticketID = new char[sizeof(Administrator)];
+
     srand(time(NULL));
     for(int i=0; i<9; i++) {
         *(ticketID+i) = *(ticketHash + (rand()%37));
     }
 
     *(ticketID+8) = '\0';
+    
+    delete [] ticketID;
+    return ticketID;
 }

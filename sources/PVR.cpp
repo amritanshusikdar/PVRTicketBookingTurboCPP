@@ -26,6 +26,7 @@ int main() {
     loginMenu();
     loadWait("Damnson!");
     goodBye();
+    
 
     getch();
 
