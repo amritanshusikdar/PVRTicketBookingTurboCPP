@@ -14,15 +14,48 @@ void welcomeScreen(char* message) {
     cout << message << endl;
 }
 
-int loginMenu(void) {
-    int choice;
+// Returns Choice //
+int loginMenu(){
+	clrscr();
+	cout << "\n\n\n\n\n\n";
+	cout << "\t\t\t*-------------------------*";
+	for(int i=0; i<9; i++){
+		switch(i){
+			case 0:
+				cout << "\n\t\t\t|\t ---------\t  |";
+			break;
 
-    cout << "Main Menu!\n";
+			case 1:
+				cout << "\n\t\t\t|\t PVR Sikka\t  |";
+			break;
 
-    cout << "1. Login\n2. Register\n3. Continue As Guest\n";
-    cin >> choice;
+			case 2:
+				cout << "\n\t\t\t|\t ---------\t  |";
+			break;
 
-    return choice;
+			case 4:
+				cout << "\n\t\t\t|\t1. Login\t  |";
+			break;
+
+			case 5:
+				cout << "\n\t\t\t|\t2. Register\t  |";
+			break;
+
+			case 6:
+				cout << "\n\t\t\t|\t3. Use Guest\t  |";
+			break;
+
+			case 7:
+				cout << "\n\t\t\t|\t4. Quit\t\t  |";
+			break;
+
+			default:
+				cout << "\n\t\t\t|\t\t\t  |";
+		}
+	}
+	
+	cout << "\n\t\t\t*-------------------------*\n\n";
+	cout << "\t\t\t   Enter your choice: "; return getch();
 }
 
 void loadWait(char *phrase) {
