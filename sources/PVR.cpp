@@ -15,13 +15,17 @@
 
 
 
-//  HEADER FILES
+//  SYSTEM HEADER FILES
 
 #include <fstream.h>
 #include <conio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <dos.h>
+
+//  CUSTOM HEADERS
+
+#include "admin.h"
 
 //  GLOBAL VARIABLES
 
@@ -39,8 +43,7 @@ void goodBye(void);
 
 
 //  START OF main()
-int main()
-{
+int main() {
     clrscr();
 
     welcomeScreen("Hey there!");
@@ -54,18 +57,18 @@ int main()
 //  END OF main()
 
 
+
+
 //////////////////////////////////////
 ////~~~USER DEFINED FUNCTIONS~~~//////
 //////////////////////////////////////
 
-void welcomeScreen(char* message)
-{
-    /* @TODO
-    waiting for function */
+void welcomeScreen(char* message) {
+    clrscr();
+    cout << message << endl;
 }
 
-int loginMenu(void)
-{
+int loginMenu(void) {
     int choice;
 
     cout << "Main Menu!\n";
@@ -76,8 +79,7 @@ int loginMenu(void)
     return choice;
 }
 
-void loadWait(char *phrase)
-{
+void loadWait(char *phrase) {
     clrscr();
 
     cout << phrase << endl;
@@ -86,8 +88,7 @@ void loadWait(char *phrase)
 
     cout << "Loading...";
 
-    while(i <= 100)
-    {
+    while(i <= 100) {
         gotoxy(12,2);
         cout << '\\' << (char) 8;   // Printing backspace character --- ASCII = 8
         delay(loadWaitDelay);
@@ -118,8 +119,7 @@ void loadWait(char *phrase)
 
 }
 
-void goodBye(void)
-{
+void goodBye(void) {
     cout << "\n\nThanks for Visiting!\n\n";
 }
 

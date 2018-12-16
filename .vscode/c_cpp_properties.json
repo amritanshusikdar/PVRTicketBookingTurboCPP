@@ -3,7 +3,8 @@
         {
             "name": "Mac",
             "includePath": [
-                "/Users/da_sikka_x/Desktop/PVR/BIN"
+                "${workspaceFolder}/BIN",
+                "${workspaceFolder}/headers"
             ],
             "defines": [],
             "macFrameworkPath": [
