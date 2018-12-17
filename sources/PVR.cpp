@@ -21,16 +21,15 @@
 //  START OF main()
 int main() {
     clrscr();
-
-    // loginMenu();
-    // loadWait("Damnson!");
-
-    loginMenu();
-    welcomeAndThanks(0);
-
+    welcomeAndThanks(1);
     getch();
 
     return 0;
+
+    /* @TODO:
+        after everything's done, make another header and
+        just call one function from main to commence the
+        program */
 }
 
 //  END OF main()

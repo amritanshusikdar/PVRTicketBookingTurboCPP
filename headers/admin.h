@@ -5,9 +5,18 @@
  */
 
 
+#include <iostream.h>
 #include <stdlib.h>
 #include <time.h>
-#include <iostream.h>
+
+
+//  Defining file name constants for ease of use
+
+//  names should be self explanatory
+const char FILE__GUEST_FILE[10] = "guest.dat";
+const char FILE__TICKET_ID_STORAGE[13] = "ticketID.dat";
+const char FILE__USER_LOGIN_DETAILS[13] = "userData.txt";
+const char FILE__MOVIES_DATABASE[11] = "movies.txt";
 
 
 static const char ticketHash[37] = "0123456789"
@@ -27,6 +36,17 @@ class Manager : public Administrator {
     private:
     protected:
     public:
+};
+
+struct Accounts {
+
+    //  Name of the user
+    char name[30];
+
+    // Age of the user, to check whether eligible for 18+ movies
+    unsigned int age;
+
+
 };
 
 //  Class Function Definitions   //

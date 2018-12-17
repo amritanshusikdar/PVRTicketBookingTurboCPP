@@ -3,8 +3,7 @@
     Eg: welcomeScreen, loadingScreen, viewEmptySeats, etc.
  */
 
-#include <iostream.h>
-#include <conio.h>
+#include <constream.h>
 #include <dos.h>
 #include <string.h>
 
