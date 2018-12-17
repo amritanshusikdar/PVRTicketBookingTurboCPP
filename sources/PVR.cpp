@@ -26,7 +26,7 @@ int main() {
     // loadWait("Damnson!");
 
     loginMenu();
-    cout << welcomeAndThanks(0);
+    welcomeAndThanks(0);
 
     getch();
 

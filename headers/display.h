@@ -10,6 +10,11 @@
 
 const int loadWaitDelay = 40;
 
+
+
+/* Function definitions */
+
+
 // Returns Choice //
 int loginMenu() {
 
@@ -59,7 +64,7 @@ int loginMenu() {
 }
 
 // Pass 1 for `Welcome` screen, anything else for `Thanks for Visiting` screen //
-int welcomeAndThanks(int choice){
+void welcomeAndThanks(int choice){
 	clrscr();
 	cout << "\n\n\n\n\n\n";
 	cout << "\t\t\t  *-------------------------*";
