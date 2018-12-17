@@ -63,6 +63,48 @@ int loginMenu() {
 	cout << "\t\t\t   Enter your choice: "; return getch();
 }
 
+// Pass 1 for `Welcome` screen, anything else for `Thanks for Visiting` screen //
+int welcomeAndThanks(int choice){
+	clrscr();
+	cout << "\n\n\n\n\n\n";
+	cout << "\t\t\t*-------------------------*";
+	for(int i=0; i<4; i++){
+		switch(i){
+			case 0:
+				cout << "\n\t\t\t|\t ---------\t  |";
+			break;
+
+			case 1:
+				if(choice==1) cout << "\n\t\t\t|\t  Welcome\t  |";
+				else cout << "\n\t\t\t|\t   Thanks\t  |";
+			break;
+
+			case 2:
+				if(choice==1) cout << "\n\t\t\t|\tto PVRSikka\t  |";
+				else cout << "\n\t\t\t|\tfor visiting!\t  |";
+			break;
+
+			case 3:
+				cout << "\n\t\t\t|\t ---------\t  |";
+			break;
+
+			default:
+				cout << "\n\t\t\t|\t\t\t  |";
+		}
+	}
+	
+	cout << "\n\t\t\t*-------------------------*\n\n";
+	cout << "\t\t\t Press any key to continue.\n\n"; 
+
+	cout << "\t\t\t########  ##     ## ######## \n";
+	cout << "\t\t\t##     ## ##     ## ##     ##\n";
+	cout << "\t\t\t##     ## ##     ## ##     ##\n";
+	cout << "\t\t\t########  ##     ## ######## \n";
+	cout << "\t\t\t##         ##   ##  ##   ##  \n";
+	cout << "\t\t\t##          ## ##   ##    ## \n";
+	cout << "\t\t\t##           ###    ##     ##\n";
+	clrscr();
+}
 
 
 void loadWait(char *phrase) {
