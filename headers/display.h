@@ -10,11 +10,6 @@
 
 const int loadWaitDelay = 40;
 
-void welcomeScreen(char* message) {
-    clrscr();
-    cout << message << endl;
-}
-
 // Returns Choice //
 int loginMenu() {
 
@@ -39,19 +34,19 @@ int loginMenu() {
 			break;
 
 			case 4:
-				cout << "\n\t\t\t|\t1. Login\t  |";
+				cout << "\n\t\t\t|\t 1. Login\t  |";
 			break;
 
 			case 5:
-				cout << "\n\t\t\t|\t2. Register\t  |";
+				cout << "\n\t\t\t|       2. Register\t  |";
 			break;
 
 			case 6:
-				cout << "\n\t\t\t|\t3. Use Guest\t  |";
+				cout << "\n\t\t\t|  3. Continue as Guest   |";
 			break;
 
 			case 7:
-				cout << "\n\t\t\t|\t4. Quit\t\t  |";
+				cout << "\n\t\t\t|\t  4. Quit\t  |";
 			break;
 
 			default:
@@ -67,42 +62,44 @@ int loginMenu() {
 int welcomeAndThanks(int choice){
 	clrscr();
 	cout << "\n\n\n\n\n\n";
-	cout << "\t\t\t*-------------------------*";
+	cout << "\t\t\t  *-------------------------*";
 	for(int i=0; i<4; i++){
 		switch(i){
 			case 0:
-				cout << "\n\t\t\t|\t ---------\t  |";
+				cout << "\n\t\t\t  |\t  ----------\t    |";
 			break;
 
 			case 1:
-				if(choice==1) cout << "\n\t\t\t|\t  Welcome\t  |";
-				else cout << "\n\t\t\t|\t   Thanks\t  |";
+				if(choice==1) cout << "\n\t\t\t  |\t  Welcome to\t    |";
+				else cout << "\n\t\t\t  |\t    Thanks\t    |";
 			break;
 
 			case 2:
-				if(choice==1) cout << "\n\t\t\t|\tto PVRSikka\t  |";
-				else cout << "\n\t\t\t|\tfor visiting!\t  |";
+				if(choice==1) cout << "\n\t\t\t  |\t  PVR Cinemas\t    |";
+				else cout << "\n\t\t\t  |\t for visiting!\t    |";
 			break;
 
 			case 3:
-				cout << "\n\t\t\t|\t ---------\t  |";
+				cout << "\n\t\t\t  |\t  ----------\t    |";
 			break;
 
 			default:
-				cout << "\n\t\t\t|\t\t\t  |";
+				cout << "\n\t\t\t  |\t\t\t    |";
 		}
 	}
 	
-	cout << "\n\t\t\t*-------------------------*\n\n";
-	cout << "\t\t\t Press any key to continue.\n\n"; 
+	cout << "\n\t\t\t  *-------------------------*\n\n";
+	cout << "\t\t\t    Press any key to continue.\n\n"; 
 
-	cout << "\t\t\t########  ##     ## ######## \n";
-	cout << "\t\t\t##     ## ##     ## ##     ##\n";
-	cout << "\t\t\t##     ## ##     ## ##     ##\n";
-	cout << "\t\t\t########  ##     ## ######## \n";
-	cout << "\t\t\t##         ##   ##  ##   ##  \n";
-	cout << "\t\t\t##          ## ##   ##    ## \n";
-	cout << "\t\t\t##           ###    ##     ##\n";
+	cout << "\t\t\t######### ###      ### ######### \n";
+	cout << "\t\t\t##     ### ###     ### ##     ###\n";
+	cout << "\t\t\t##     ### ###     ### ##     ###\n";
+	cout << "\t\t\t#########  ###     ### ######### \n";
+	cout << "\t\t\t###         ###   ###  ###   ###  \n";
+	cout << "\t\t\t###          ###  ###  ###    ### \n";
+	cout << "\t\t\t###           ####     ###     ###\n";
+
+	getch();
 	clrscr();
 }
 
@@ -147,9 +144,4 @@ void loadWait(char *phrase) {
     }
 
     delay(100);
-}
-
-
-void goodBye(void) {
-    cout << "\n\nThanks for Visiting!\n\n";
 }

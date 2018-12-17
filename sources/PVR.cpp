@@ -22,11 +22,11 @@
 int main() {
     clrscr();
 
-    welcomeScreen("Hey there!");
+    // loginMenu();
+    // loadWait("Damnson!");
+
     loginMenu();
-    loadWait("Damnson!");
-    goodBye();
-    
+    cout << welcomeAndThanks(0);
 
     getch();
 

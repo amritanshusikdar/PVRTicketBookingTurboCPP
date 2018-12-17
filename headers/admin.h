@@ -32,16 +32,11 @@ class Manager : public Administrator {
 //  Class Function Definitions   //
 
 char* Administrator::ticketIDGenerator() {
-
-    ticketID = new char[sizeof(Administrator)];
-
     srand(time(NULL));
     for(int i=0; i<9; i++) {
         *(ticketID+i) = *(ticketHash + (rand()%37));
     }
 
     *(ticketID+8) = '\0';
-    
-    delete [] ticketID;
     return ticketID;
 }
