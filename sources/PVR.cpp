@@ -19,7 +19,8 @@
 
 
 //  START OF main()
-int main() {
+int main()
+{
     clrscr();
     welcomeAndThanks(1);
     getch();

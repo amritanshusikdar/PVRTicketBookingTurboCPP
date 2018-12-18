@@ -3,11 +3,11 @@
     Eg: welcomeScreen, loadingScreen, viewEmptySeats, etc.
  */
 
-#include <constream.h>
+#include <cstream.h>
 #include <dos.h>
 #include <string.h>
 
-const int loadWaitDelay = 40;
+#include "consts.h"
 
 
 
@@ -23,8 +23,10 @@ int loginMenu() {
 
 	cout << "\n\n\n\n\n\n";
 	cout << "\t\t\t*-------------------------*";
-	for(size_t i=0; i<9; i++) {
-		switch(i) {
+	for(size_t i=0; i<9; i++)
+	{
+		switch(i)
+		{
 			case 0:
 				cout << "\n\t\t\t|\t ==========\t  |";
 			break;
@@ -63,12 +65,15 @@ int loginMenu() {
 }
 
 // Pass 1 for `Welcome` screen, anything else for `Thanks for Visiting` screen //
-void welcomeAndThanks(int choice){
+void welcomeAndThanks(int choice)
+{
 	clrscr();
 	cout << "\n\n\n\n\n\n";
 	cout << "\t\t\t  *-------------------------*";
-	for(int i=0; i<4; i++){
-		switch(i){
+	for(int i=0; i<4; i++)
+	{
+		switch(i)
+		{
 			case 0:
 				cout << "\n\t\t\t  |\t  ----------\t    |";
 			break;
@@ -108,7 +113,8 @@ void welcomeAndThanks(int choice){
 }
 
 
-void loadWait(char *phrase) {
+void loadWait(char *phrase)
+{
     clrscr();
 
     int i=4;
@@ -120,7 +126,8 @@ void loadWait(char *phrase) {
     gotoxy(35,y-1);
     cout << "Loading...";
 
-    while(i <= 100) {
+    while(i <= 100)
+	{
         gotoxy(48,12);
         cout << '\\' << (char) 8;   // Printing backspace character --- ASCII = 8
         delay(loadWaitDelay);
