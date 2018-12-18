@@ -153,9 +153,15 @@ void loadWait(char *phrase)
 void showSeats()
 {
 	clrscr();
-	cout << "\n\n\n\n\n\n";
+
+	char alphabet = 'A';
+
+	cout << "\n\n\n\n\n\n\n\n";
 	srand(time(NULL));
-	cout << "\t\t\t";
+	cout << "\t\t       ";
+
+	cout << '-' << char(197) << "- ";
+
 	for(int i=0; i<15; i++)
 	{ 
 		for(int j=0; j<10; j++)
@@ -163,15 +169,18 @@ void showSeats()
 				int now = rand() % 2;
 				if(now == 1)
 				{
-					if(i==0) cout << "  " << j+1;
+					if(i==0) cout << j+1 << "  ";
 					else cout << "  " << char(4);
 				}
 				else
 				{
-					if(i==0) cout << "  " << j+1;
+					if(i==0) cout << j+1 << "  ";
 					else cout << "  " << char(127);
 				}
-		} cout << endl; cout << "\t\t\t";
+		} cout << endl << "\t\t\t";
+
+		if(i<=13)
+			cout << alphabet++;
 	}
 }
 
