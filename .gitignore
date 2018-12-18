@@ -114,3 +114,4 @@ BIN/WILDARGS.OBJ
 *.LOG
 .DS_Store
 headers/.DS_Store
+BIN/CONSTREAM.H
