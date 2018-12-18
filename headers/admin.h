@@ -5,26 +5,31 @@
  */
 
 
-#include <iostream.h>
+#include <cstream.h>
 #include <stdlib.h>
 #include <time.h>
 
-
-//  Defining file name constants for ease of use
-
+#include "globals.h"
 
 
-
-static const char ticketHash[37] = "0123456789"
-                            "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
+/* One time functions are here */
 class Administrator
 {
     private:
         char *userID;
         char *password;
+        unsigned int age;
         char *ticketID;
+    
+    
     protected:
+    
+
+    //  Generates random TicketIDs using 0-9 and A-Z characters
+        char* ticketIDGenerator();
+        int newUserGenerator();     //  @TODO
+    
+    
     public:
     //  Constructor : Initialising the variables
         Administrator();
@@ -32,32 +37,23 @@ class Administrator
     //  Destructor : Freeing / Deallocating the memory
         ~Administrator();
 
-    //  Generates random TicketIDs using 0-9 and A-Z characters
-        char* ticketIDGenerator();
 };
 
+/* Function to be used recursively are here */
 class Manager : public Administrator
 {
     private:
+
+
     protected:
+    //  Ask user for login credentials
+        void askCredentials();  // @TODO
+        void checkLogin();  // @TODO
+
     public:
         Manager();
         ~Manager();
 };
-
-struct Accounts
-{
-
-    //  Name of the user
-    char name[30];
-
-    // Age of the user, to check whether eligible for 18+ movies
-    unsigned int age;
-};
-
-
-
-
 
 
 
@@ -68,6 +64,8 @@ Administrator::Administrator()
     userID = new char[10];
     password = new char[10];
     ticketID = new char[9];
+
+    age = 0;
 }
 
 Administrator::~Administrator()
@@ -76,6 +74,9 @@ Administrator::~Administrator()
     delete[] password;
     delete[] ticketID;
 }
+
+void Manager::askCredentials()
+{}
 
 char* Administrator::ticketIDGenerator()
 {

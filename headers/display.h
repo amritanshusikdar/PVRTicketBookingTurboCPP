@@ -8,6 +8,7 @@
 #include <string.h>
 
 #include "consts.h"
+#include "globals.h"
 
 
 
@@ -15,7 +16,8 @@
 
 
 // Returns Choice //
-int loginMenu() {
+int loginMenu()
+{
 
 	clrscr();
 
@@ -155,4 +157,9 @@ void loadWait(char *phrase)
     }
 
     delay(100);
+}
+
+void customerService()
+{
+	//	@TODO just random email and phone numbers in a beautiful format
 }
