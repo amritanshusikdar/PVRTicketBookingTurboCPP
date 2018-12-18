@@ -12,10 +12,15 @@
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 
-
-
-#include "admin.h"
-#include "display.h"
+#include <cstream.h>
+#include <stdlib.h>
+#include <time.h>
+#include <dos.h>
+#include <string.h>
+#include <consts.h>
+#include <globals.h>
+#include <admin.h>
+#include <display.h>
 
 
 //  START OF main()

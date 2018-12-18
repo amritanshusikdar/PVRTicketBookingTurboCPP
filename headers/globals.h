@@ -6,7 +6,7 @@
 //  Login checks --- also assigning initial values
 //  tells the login medium
 
-static int loggedAsUser = true;
-static int loggedAsAdmin = false;
-static int loggedAsGuest = false;
+extern int loggedAsUser = true;
+extern int loggedAsAdmin = false;
+extern int loggedAsGuest = false;
 

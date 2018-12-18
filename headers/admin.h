@@ -4,14 +4,6 @@
     Calculating fees, generating TicketID, etc.
  */
 
-
-#include <cstream.h>
-#include <stdlib.h>
-#include <time.h>
-
-#include "globals.h"
-
-
 /* One time functions are here */
 class Administrator
 {

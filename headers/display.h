@@ -3,15 +3,6 @@
     Eg: welcomeScreen, loadingScreen, viewEmptySeats, etc.
  */
 
-#include <cstream.h>
-#include <dos.h>
-#include <string.h>
-
-#include "consts.h"
-#include "globals.h"
-
-
-
 /* Function definitions */
 
 
