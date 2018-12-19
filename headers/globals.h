@@ -1,5 +1,10 @@
 //  Truth values
 
+#ifndef __GLOGALS_H__
+#define __GLOGALS_H__
+
+/* ~~~~~~~~~~********** START OF __GLOBALS_H__ **********~~~~~~~~~~ */
+
 #define false 0
 #define true !false
 
@@ -30,3 +35,7 @@ enum SEAT_ROW     // to be declared as--->     SEAT_ROW var = SEAT_ROW::C;  // t
     M,
     N
 };
+
+/* ~~~~~~~~~~********** END OF __GLOBALS_H__ **********~~~~~~~~~~ */
+
+#endif

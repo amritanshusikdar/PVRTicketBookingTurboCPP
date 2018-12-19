@@ -20,10 +20,9 @@
 #include <time.h>
 
 //  Custom headers written for this project
+
 #include "admin.h"
 #include "display.h"
-#include "consts.h"
-#include "globals.h"
 
 
 //  START OF main()
@@ -32,6 +31,8 @@ int main()
     clrscr();
     welcomeAndThanks(1);
 
+    admin something;
+    something.adminMenu();
     showSeats();
     getch();
     return 0;

@@ -2,7 +2,17 @@
     To take care of all the back-end processes like...
 
     Calculating fees, generating TicketID, etc.
- */
+*/
+
+
+#ifndef __ADMIN_H__
+#define __ADMIN_H__
+
+/* ~~~~~~~~~~********** START OF __ADMIN_H__ **********~~~~~~~~~~ */
+
+
+#include "globals.h"
+#include "consts.h"
 
 //  Storing customer details
 class Customer
@@ -29,7 +39,6 @@ class Customer
 
 };
 
-
 //  Only for the Administrator
 class movieDetails
 {
@@ -49,12 +58,20 @@ class seats : public movieDetails
 {
     protected:
         unsigned int x;
-        SEAT_ROW y;
+        enum SEAT_ROW y;
     
     public:
-        seats() { x = 0; }
+        seats() { x = 0; y = A; }
         void occupySeat();
         int isSeatOccupied();
+};
+
+
+class admin
+{
+    protected:
+    public:
+        int adminMenu();
 };
 
 
@@ -118,4 +135,10 @@ void seats::occupySeat()
 {}
 
 int seats::isSeatOccupied()
-{}
+{return 0;}
+
+
+
+/* ~~~~~~~~~~********** END OF __ADMIN_H__ **********~~~~~~~~~~ */
+
+#endif

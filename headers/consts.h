@@ -1,3 +1,9 @@
+
+#ifndef __CONSTS_H__
+#define __CONSTS_H__
+
+/* ~~~~~~~~~~********** START OF __CONSTS_H__ **********~~~~~~~~~~ */
+
 /* Constants for "admin.h" */
 
 //  names of identifiers and files should be self explanatory
@@ -18,3 +24,9 @@ static const char ticketHash[37] = "0123456789"
 
 //  loading screen delay
 static const int loadWaitDelay = 40;
+
+
+
+/* ~~~~~~~~~~********** END OF __CONSTS_H__ **********~~~~~~~~~~ */
+
+#endif
