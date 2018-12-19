@@ -1,7 +1,7 @@
 //  Truth values
 
-#ifndef __GLOGALS_H__
-#define __GLOGALS_H__
+#ifndef __GLOBALS_H__
+#define __GLOBALS_H__
 
 /* ~~~~~~~~~~********** START OF __GLOBALS_H__ **********~~~~~~~~~~ */
 
