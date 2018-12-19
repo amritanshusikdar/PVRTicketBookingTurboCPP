@@ -1,4 +1,4 @@
-/* 
+/*
     To take care of all the back-end processes like...
 
     Calculating fees, generating TicketID, etc.
@@ -23,13 +23,13 @@ class Customer
         char *password;
         unsigned long long phone;
         unsigned int age;
-        char *ticketID;   
+        char *ticketID;
 
     //  Generates random TicketIDs using 0-9 and A-Z characters
         int newUserGenerator();     //  @TODO
         char* ticketIDGenerator();
-    
-    
+
+
     public:
     //  Constructor : Initialising the variables
         Customer();
@@ -40,7 +40,7 @@ class Customer
 };
 
 //  Only for the Administrator
-class movieDetails
+class MovieDetails
 {
     protected:
         char *name;     //  name of movie
@@ -49,43 +49,47 @@ class movieDetails
         int critics;    //  out of 100%
 
     public:
-        movieDetails();
-        ~movieDetails();
+        MovieDetails();
+        ~MovieDetails();
 };
 
 //  maintaining seating coordinates
-class seats : public movieDetails
+class Seats : public MovieDetails
 {
     protected:
         unsigned int x;
         enum SEAT_ROW y;
-    
+
     public:
-        seats() { x = 0; y = A; }
+        Seats() : x(0), y(A) {}
         void occupySeat();
         int isSeatOccupied();
 };
 
 
-class admin
+class Admin : public MovieDetails
 {
     protected:
+        char *username;
+        char *password;
     public:
+        Admin();
+        ~Admin();
         int adminMenu();
+        void addMovieToLibrary();
+        void deleteMovieFromLibary(int movieID);
 };
+
+
+
 
 
 //  Customer class Function Definitions   //
 
 Customer::Customer()
-{
-    name = new char[20];
-    username = new char[10];
-    password = new char[10];
-    phone = NULL;
-    age = NULL;
-    ticketID = new char[9];
-}
+    :   name(new char[20]), username(new char[10]), password(new char[10]),
+        phone(NULL), age(NULL), ticketID(new char[9])
+{}
 
 Customer::~Customer()
 {
@@ -99,7 +103,7 @@ Customer::~Customer()
 char* Customer::ticketIDGenerator()
 {
     srand(time(NULL));
-    
+
     // Length of the ticketID should be 8
     for(int i=0; i<9; i++)
     {
@@ -112,30 +116,50 @@ char* Customer::ticketIDGenerator()
 
 
 
-//  movieDetails class Function Definitions   //
+//  MovieDetails class Function Definitions   //
 
-movieDetails::movieDetails()
-{
-    name = new char[20];
-    adult = false;
-    rate = 0.0;
-    critics = NULL;
-}
+MovieDetails::MovieDetails()
+    :   name(new char[20]), adult(false), rate(0.0), critics(NULL)
+{}
 
-movieDetails::~movieDetails()
+MovieDetails::~MovieDetails()
 {
     delete[] name;
 }
 
 
 
-//  seats class Function Definitions    //
+//  Seats class Function Definitions    //
 
-void seats::occupySeat()
+void Seats::occupySeat()
 {}
 
-int seats::isSeatOccupied()
+int Seats::isSeatOccupied()
 {return 0;}
+
+
+
+//  Admin class Function Definitions    //
+
+Admin::Admin()
+    :   username(new char[6]), password(new char[6])
+{
+    username = password = "admin";
+}
+
+Admin::~Admin()
+{
+    delete[] username, password;
+}
+
+void addMovieToLibrary()
+{
+    fstream file(FILE__MOVIES_DATABASE, ios::app);
+    
+}
+
+void deleteMovieFromLibary(int movieID)
+{}
 
 
 

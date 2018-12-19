@@ -16,8 +16,10 @@
 // Returns Choice //
 int loginMenu()
 {
-
 	clrscr();
+
+	int choice, valid = false;
+	char selection;
 
 	//  Starting the drawing  //
 
@@ -61,7 +63,38 @@ int loginMenu()
 	}
 	
 	cout << "\n\t\t\t*-------------------------*\n\n";
-	cout << "\t\t\t   Enter your choice: "; return getch();
+
+	cout << "\t\t\t   Enter your choice: ";
+    //  checking for invalid options
+    while(!valid)
+    {    
+        cin >> selection;
+
+        switch (selection)
+        {
+            case '1':
+                choice = 1;
+                valid = true;
+                break;
+            case '2':
+                choice = 2;
+                valid = true;
+                break;
+            case '3':
+                choice = 3;
+                valid = true;
+                break;
+            case '4':
+                choice = 4;
+                valid = true;
+                break;
+            default:
+                cout << "\t\tWrong choice entered! Please retry: ";
+                break;
+        }
+    }
+    
+    return choice;
 }
 
 // Pass 1 for `Welcome` screen, anything else for `Thanks for Visiting` screen //
@@ -191,7 +224,7 @@ void showSeats()
 	}
 }
 
-int admin::adminMenu()
+int Admin::adminMenu()
 {
 
 	clrscr();

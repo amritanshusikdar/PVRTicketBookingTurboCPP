@@ -36,19 +36,6 @@ enum SEAT_ROW
     N
 };
 
-// struct SEAT_ROW_OPERATERPP
-// {    
-//     SEAT_ROW operator^(SEAT_ROW Z)
-//     {
-//         return SEAT_ROW(Z+1);
-//     }
-// };
-
-// SEAT_ROW operator ++ (SEAT_ROW Z)
-// {
-//     return SEAT_ROW(Z+1);
-// }
-
 /* ~~~~~~~~~~********** END OF __GLOBALS_H__ **********~~~~~~~~~~ */
 
 #endif

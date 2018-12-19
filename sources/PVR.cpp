@@ -13,6 +13,7 @@
 /////////////////////////////////////////////////////////////////////
 
 //  C++ Library
+#include <fstream.h>
 #include <cstream.h>
 #include <stdlib.h>
 #include <dos.h>
@@ -31,7 +32,9 @@ int main()
     clrscr();
     welcomeAndThanks(1);
 
-    admin something;
+    loginMenu();
+
+    Admin something;
     something.adminMenu();
     showSeats();
     getch();
