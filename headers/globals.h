@@ -18,7 +18,7 @@ static int loggedAsGuest = false;
 
 //  Seat alphabetical coordinates
 
-enum SEAT_ROW     // to be declared as--->     SEAT_ROW var = SEAT_ROW::C;  // to be used as SEAT_ROW::C
+enum SEAT_ROW
 {
     A=0,
     B,
@@ -35,6 +35,19 @@ enum SEAT_ROW     // to be declared as--->     SEAT_ROW var = SEAT_ROW::C;  // t
     M,
     N
 };
+
+// struct SEAT_ROW_OPERATERPP
+// {    
+//     SEAT_ROW operator^(SEAT_ROW Z)
+//     {
+//         return SEAT_ROW(Z+1);
+//     }
+// };
+
+// SEAT_ROW operator ++ (SEAT_ROW Z)
+// {
+//     return SEAT_ROW(Z+1);
+// }
 
 /* ~~~~~~~~~~********** END OF __GLOBALS_H__ **********~~~~~~~~~~ */
 
