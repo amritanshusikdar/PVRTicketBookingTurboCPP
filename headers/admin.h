@@ -4,73 +4,82 @@
     Calculating fees, generating TicketID, etc.
  */
 
-/* One time functions are here */
-class Administrator
+//  Storing customer details
+class Customer
 {
-    private:
-        char *userID;
-        char *password;
-        unsigned int age;
-        char *ticketID;
-    
-    
     protected:
-    
+        char *name;
+        char *username;
+        char *password;
+        unsigned long long phone;
+        unsigned int age;
+        char *ticketID;   
 
     //  Generates random TicketIDs using 0-9 and A-Z characters
-        char* ticketIDGenerator();
         int newUserGenerator();     //  @TODO
+        char* ticketIDGenerator();
     
     
     public:
     //  Constructor : Initialising the variables
-        Administrator();
+        Customer();
 
     //  Destructor : Freeing / Deallocating the memory
-        ~Administrator();
+        ~Customer();
 
 };
 
-/* Function to be used recursively are here */
-class Manager : public Administrator
+
+//  Only for the Administrator
+class movieDetails
 {
-    private:
-
-
     protected:
-    //  Ask user for login credentials
-        void askCredentials();  // @TODO
-        void checkLogin();  // @TODO
+        char *name;     //  name of movie
+        int adult;      //  to be used as boolean
+        float rate;     //  out of 5.0
+        int critics;    //  out of 100%
 
     public:
-        Manager();
-        ~Manager();
+        movieDetails();
+        ~movieDetails();
+};
+
+//  maintaining seating coordinates
+class seats : public movieDetails
+{
+    protected:
+        unsigned int x;
+        SEAT_ROW y;
+    
+    public:
+        seats() { x = 0; }
+        void occupySeat();
+        int isSeatOccupied();
 };
 
 
+//  Customer class Function Definitions   //
 
-//  Administrator class Function Definitions   //
-
-Administrator::Administrator()
+Customer::Customer()
 {
-    userID = new char[10];
+    name = new char[20];
+    username = new char[10];
     password = new char[10];
+    phone = NULL;
+    age = NULL;
     ticketID = new char[9];
-
-    age = 0;
 }
 
-Administrator::~Administrator()
+Customer::~Customer()
 {
-    delete[] userID;
+    delete[] name;
+    delete[] username;
     delete[] password;
     delete[] ticketID;
 }
 
-void Manager::askCredentials()
-{}
 
-char* Administrator::ticketIDGenerator()
+char* Customer::ticketIDGenerator()
 {
     srand(time(NULL));
     
@@ -86,14 +95,27 @@ char* Administrator::ticketIDGenerator()
 
 
 
+//  movieDetails class Function Definitions   //
+
+movieDetails::movieDetails()
+{
+    name = new char[20];
+    adult = false;
+    rate = 0.0;
+    critics = NULL;
+}
+
+movieDetails::~movieDetails()
+{
+    delete[] name;
+}
 
 
 
+//  seats class Function Definitions    //
 
-//  Manager class Function Definitions  //
-
-Manager::Manager()
+void seats::occupySeat()
 {}
 
-Manager::~Manager()
+int seats::isSeatOccupied()
 {}

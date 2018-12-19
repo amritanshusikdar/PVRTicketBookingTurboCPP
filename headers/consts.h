@@ -10,27 +10,11 @@ static const char FILE__SEATS_AVAILABLE[10] = "seats.dat";
 static const char ticketHash[37] = "0123456789"
                             "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-/* 
-
-for movies
-name
-age
-rate ----- 4.4
-critics ---- 97% */
-
-/* 
-for user
-name
-username
-phone number
-password
-age
- */
-
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 
 /* Constants for "display.h" */
 
+//  loading screen delay
 static const int loadWaitDelay = 40;
