@@ -15,6 +15,7 @@
 //  C++ Library
 #include <fstream.h>
 #include <cstream.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <dos.h>
 #include <string.h>
@@ -30,13 +31,12 @@
 int main()
 {
     clrscr();
-    welcomeAndThanks(1);
 
-    loginMenu();
+    MovieDetails something;
 
-    Admin something;
-    something.adminMenu();
-    showSeats();
+    addMovieToLibrary(something);
+    deleteMovieFromLibary(something);
+
     getch();
     return 0;
 

@@ -43,14 +43,34 @@ class Customer
 class MovieDetails
 {
     protected:
-        char *name;     //  name of movie
+        int ID;
+
+    public:
+        char name[20];     //  name of movie
         int adult;      //  to be used as boolean
         float rate;     //  out of 5.0
         int critics;    //  out of 100%
 
-    public:
         MovieDetails();
         ~MovieDetails();
+
+        int getID() const
+        {
+            return ID;
+        }
+
+        void setID(int& ID)
+        {
+            this.ID = ID;
+        }
+
+        void showMovies()
+        {
+            cout << "Name: " << name << endl;
+            cout << "Adult: " << (adult ? "Yes" : "No") << endl;
+            cout << "Rate: " << (float) rate << endl;
+            cout << "Critics: " << critics << endl;
+        }
 };
 
 //  maintaining seating coordinates
@@ -64,20 +84,6 @@ class Seats : public MovieDetails
         Seats() : x(0), y(A) {}
         void occupySeat();
         int isSeatOccupied();
-};
-
-
-class Admin : public MovieDetails
-{
-    protected:
-        char *username;
-        char *password;
-    public:
-        Admin();
-        ~Admin();
-        int adminMenu();
-        void addMovieToLibrary();
-        void deleteMovieFromLibary(int movieID);
 };
 
 
@@ -119,8 +125,10 @@ char* Customer::ticketIDGenerator()
 //  MovieDetails class Function Definitions   //
 
 MovieDetails::MovieDetails()
-    :   name(new char[20]), adult(false), rate(0.0), critics(NULL)
-{}
+    :   adult(false), rate(0.0), critics(NULL)
+{
+    strcpy(name,"NULL");
+}
 
 MovieDetails::~MovieDetails()
 {
@@ -139,27 +147,90 @@ int Seats::isSeatOccupied()
 
 
 
-//  Admin class Function Definitions    //
 
-Admin::Admin()
-    :   username(new char[6]), password(new char[6])
+
+void addMovieToLibrary(MovieDetails& admin)
 {
-    username = password = "admin";
+    char choice, answer='n';
+    int ID;
+
+    ofstream file(FILE__MOVIES_DATABASE, ios::app | ios::binary);
+
+    cout << "\t\t\t    =====================\n";
+    cout << "\t\t\t     ENTER MOVIE DETAILS\n";
+    cout << "\t\t\t    =====================\n";
+
+    do
+    {
+        cout << "Name: ";
+        gets(admin.name);
+
+        cout << "Enter movie ID: ";
+        cin >> ID;
+        admin.setID(ID);
+
+        do
+        {
+            cout << "Is the movie only for Adults(y/n): ";
+            cin >> choice;
+        }while(!(choice == 'y' || choice == 'Y' || choice == 'n' || choice == 'N'));
+
+        admin.adult = (choice == 'y' || choice == 'Y') ? true : false;
+
+        do{
+            cout << "How much would you rate the movie(out of 0.0 - 5.0): ";
+            cin >> (float) admin.rate;
+        }while(!(admin.rate >= 0.0 && admin.rate <= 5.0));
+
+        do
+        {
+            cout << "How's the critics(out of 0% - 100%): ";
+            cin >> admin.critics;
+        }while(!(admin.critics >= 0 && admin.critics <= 100));
+
+        file.write((char*)admin, sizeof(admin));
+
+        cout << "Movie added successfully!" << endl;
+        cin.get();
+
+        cout << "\nDo you want to add another movie(y/n): ";
+        cin >> answer;
+    }while(answer == 'y' || answer == 'Y');
+
+    file.close();
 }
 
-Admin::~Admin()
-{
-    delete[] username, password;
-}
 
-void addMovieToLibrary()
+void deleteMovieFromLibary(MovieDetails& admin )
 {
-    fstream file(FILE__MOVIES_DATABASE, ios::app);
-    
-}
+    fstream file(FILE__MOVIES_DATABASE, ios::in | ios::binary);
 
-void deleteMovieFromLibary(int movieID)
-{}
+    cout << "\t\t\t    =====================\n";
+    cout << "\t\t\t       AVAILABLE MOVIES\n";
+    cout << "\t\t\t    =====================\n";
+
+    if(!file)
+    {
+        cout << "File not found!" << endl;
+        getch();
+        return;
+    }
+
+    while(!file.eof())
+    {
+        file.read((char*)admin, sizeof(admin));
+
+        admin.showMovies();
+    }
+
+
+    cout << "\n\n";
+    cout << "\t\t\t    =====================\n";
+    cout << "\t\t\t     ENTER MOVIE DETAILS\n";
+    cout << "\t\t\t    =====================\n";
+
+    file.close();
+}
 
 
 

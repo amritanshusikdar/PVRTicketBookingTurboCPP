@@ -1,4 +1,4 @@
-/* 
+/*
 	All front end "To be displayed on screen" functions are defined here
 	Eg: welcomeScreen, loadingScreen, viewEmptySeats, etc.
 */
@@ -61,13 +61,13 @@ int loginMenu()
 					cout << "\n\t\t\t|\t\t\t  |";
 		}
 	}
-	
+
 	cout << "\n\t\t\t*-------------------------*\n\n";
 
 	cout << "\t\t\t   Enter your choice: ";
     //  checking for invalid options
     while(!valid)
-    {    
+    {
         cin >> selection;
 
         switch (selection)
@@ -93,7 +93,7 @@ int loginMenu()
                 break;
         }
     }
-    
+
     return choice;
 }
 
@@ -129,9 +129,9 @@ void welcomeAndThanks(int choice)
 					cout << "\n\t\t\t  |\t\t\t    |";
 		}
 	}
-	
+
 	cout << "\n\t\t\t  *-------------------------*\n\n";
-	cout << "\t\t\t    Press any key to continue.\n\n"; 
+	cout << "\t\t\t    Press any key to continue.\n\n";
 
 	cout << "\t\t\t######### ###      ### ######### \n";
 	cout << "\t\t\t##     ### ###     ### ##     ###\n";
@@ -203,7 +203,7 @@ void showSeats()
 	cout << '-' << char(197) << "- ";
 
 	for(int i=0; i<15; i++)
-	{ 
+	{
 		for(int j=0; j<10; j++)
 		{
 				int now = rand() % 2;
@@ -224,7 +224,7 @@ void showSeats()
 	}
 }
 
-int Admin::adminMenu()
+int adminMenu()
 {
 
 	clrscr();
@@ -272,13 +272,13 @@ int Admin::adminMenu()
 					cout << "\n\t\t\t|\t\t\t  |";
 		}
 	}
-	
+
 	cout << "\n\t\t\t*-------------------------*\n\n";
-	
+
     cout << "\t\t\t   Enter your choice: ";
     //  checking for invalid options
     while(!valid)
-    {    
+    {
         cin >> selection;
 
         switch (selection)
@@ -304,7 +304,7 @@ int Admin::adminMenu()
                 break;
         }
     }
-    
+
     return choice;
 }
 

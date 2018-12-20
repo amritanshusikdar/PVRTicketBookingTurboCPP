@@ -141,3 +141,5 @@ assets/cygwin1.dll
 assets/cp.exe
 assets/cat.exe
 assets/bash.exe
+sources/test.cpp
+builds/test.cpp.EXE
