@@ -36,6 +36,10 @@ enum SEAT_ROW
     N
 };
 
+//  Typedefs
+
+typedef char* string;
+
 /* ~~~~~~~~~~********** END OF __GLOBALS_H__ **********~~~~~~~~~~ */
 
 #endif

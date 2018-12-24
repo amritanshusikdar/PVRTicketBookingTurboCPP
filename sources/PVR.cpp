@@ -32,10 +32,8 @@ int main()
 {
     clrscr();
 
-    MovieDetails something;
-
-    addMovieToLibrary(something);
-    deleteMovieFromLibary(something);
+    // addMovieToLibrary();
+    deleteMovieFromLibary();
 
     getch();
     return 0;

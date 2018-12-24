@@ -16,6 +16,8 @@ static const char FILE__SEATS_AVAILABLE[10] = "seats.dat";
 static const char ticketHash[37] = "0123456789"
                             "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+static const int LIMIT = 5;
+
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
