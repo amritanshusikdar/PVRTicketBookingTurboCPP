@@ -270,6 +270,9 @@ void deleteMovieFromLibary()
 
             remove(FILE__MOVIES_DATABASE);
             system("rename TEMP.DAT movies.dat");
+
+            cout << "Movie deleted successfully!";
+            gotoxy(9,7);
         }
     }
 }
