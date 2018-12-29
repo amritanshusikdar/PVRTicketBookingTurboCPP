@@ -145,3 +145,4 @@ sources/test.cpp
 builds/test.cpp.EXE
 builds/test.cpp.EXE
 builds/test.cpp.EXE
+*.EXE

@@ -14,27 +14,8 @@
 static int loggedAsUser = true;
 static int loggedAsAdmin = false;
 static int loggedAsGuest = false;
+static int index = 0;  //  check which movie index is currently being worked upon
 
-
-//  Seat alphabetical coordinates
-
-enum SEAT_ROW
-{
-    A=0,
-    B,
-    C,
-    D,
-    E,
-    F,
-    G,
-    H,
-    I,
-    J,
-    K,
-    L,
-    M,
-    N
-};
 
 //  Typedefs
 

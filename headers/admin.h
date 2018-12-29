@@ -18,6 +18,7 @@
 class Customer
 {
     protected:
+        int ID;
         char name[20];
         char username[10];
         char password[9];
@@ -37,12 +38,23 @@ class Customer
     //  Destructor : Freeing / Deallocating the memory
         ~Customer();
 
+        int getID() const
+        {
+            return ID;
+        }
+
+        Customer setID(int ID)
+        {
+            this->ID = ID;
+            return *this;
+        }
+
 };
 
 //  Only for the Administrator
 class MovieDetails
 {
-    protected:
+    private:
         int ID;
 
     public:
@@ -77,19 +89,14 @@ class MovieDetails
         }
 }adminMovies[LIMIT];
 
-//  maintaining seating coordinates
-class Seats : public MovieDetails
+
+class MovieSeats : public MovieDetails
 {
-    protected:
-        unsigned int x;
-        enum SEAT_ROW y;
-
     public:
-        Seats() : x(0), y(A) {}
-        void occupySeat();
-        int isSeatOccupied();
-};
-
+        int seats[COL][ROW];    //  seats[14][10]
+        MovieSeats();
+        ~MovieSeats();
+}movieSeats[LIMIT];
 
 
 
@@ -97,7 +104,7 @@ class Seats : public MovieDetails
 //  Customer class Function Definitions   //
 
 Customer::Customer()
-    :   phone(NULL), age(NULL)
+    :   ID(NULL), phone(NULL), age(NULL)
 {
     strcpy(name,"NULL");
     strcpy(username,"NULL");
@@ -140,19 +147,27 @@ MovieDetails::MovieDetails()
     strcpy(name,"NULL");
 }
 
+//  MovieSeats class Function Definitions   //
+
+MovieSeats::MovieSeats()
+{
+    for(int i=0; i<COL; i++)
+    {
+        for(int j=0; j<ROW; j++)
+        {
+            seats[COL][ROW] = false;    // false = 0
+        }
+    }
+}
+
+MovieSeats::~MovieSeats()
+{
+    delete[] seats;
+}
 
 
-//  Seats class Function Definitions    //
 
-void Seats::occupySeat()
-{}
-
-int Seats::isSeatOccupied()
-{return 0;}
-
-
-
-
+//   Custom functions   //
 
 void addMovieToLibrary()
 {
@@ -209,7 +224,7 @@ void addMovieToLibrary()
 void deleteMovieFromLibary()
 {
     char choice;
-    int records = 0, upto;
+    int upto;
 
     fstream readingFile(FILE__MOVIES_DATABASE, ios::in | ios::binary);
     fstream writingFile;
@@ -227,9 +242,9 @@ void deleteMovieFromLibary()
 
     while(!readingFile.eof())
     {
-        readingFile.read((char*)&adminMovies[records],sizeof(MovieDetails));
-        upto = records;
-        records++;
+        readingFile.read((char*)&adminMovies[index],sizeof(MovieDetails));
+        upto = index;
+        index++;
     }
     readingFile.close();
 
@@ -242,20 +257,20 @@ void deleteMovieFromLibary()
         choice = getche();
         if(choice == 'n')
         {
-            records++;
-            if(records >= upto)
-                records = upto-1;
+            index++;
+            if(index >= upto)
+                index = upto-1;
 
-            adminMovies[records].showMovies();                       
+            adminMovies[index].showMovies();                       
         }
 
         if(choice == 'p')
         {
-            records--;
-            if(records <= 0)
-                records = 0;
+            index--;
+            if(index <= 0)
+                index = 0;
 
-            adminMovies[records].showMovies();
+            adminMovies[index].showMovies();
         }
 
         if(choice == 'd')
@@ -263,7 +278,7 @@ void deleteMovieFromLibary()
             writingFile.open("TEMP.DAT", ios::out | ios::binary);
             for(int i=0; i <= upto; i++)
             {
-                if(i != records)
+                if(i != index)
                     writingFile.write((char*)&adminMovies[i],sizeof(MovieDetails));
             }
             writingFile.close();
@@ -275,6 +290,119 @@ void deleteMovieFromLibary()
             gotoxy(9,7);
         }
     }
+}
+
+//  Name is self explanatory
+void readSeatsFromFile(void)
+{
+    ifstream file;
+    file.open(FILE__SEATS,ios::in);
+
+    for(int i=0; i<LIMIT; i++)
+        file.read((char*)&movieSeats[i],sizeof(MovieSeats));
+
+    file.close();
+}
+
+//  Name is self explanatory
+void writeSeatsToFile(void)
+{
+    ofstream file;
+    file.open(FILE__SEATS,ios::out);
+
+    for(int i = 0; i < LIMIT; i++)
+        file.write((char*)&movieSeats[i],sizeof(MovieSeats));
+    file.close();    
+}
+
+//  for booking the seats of particular movie
+void bookSeats(int record)
+{
+    char choice = 'y', charCol;
+    int col, row;
+
+    while(choice != 'n')
+    {
+        cout << "Enter Column (A-N): ";
+        cin >> charCol;
+
+        //  Assigning numerical value according to A=0, B=1 ... N = 13
+
+        switch(charCol)
+        {
+            case 'A':
+            case 'a':
+                col = 0;
+                break;
+            case 'B':
+            case 'b':
+                col = 1;
+                break;
+            case 'C':
+            case 'c':
+                col = 2;
+                break;
+            case 'D':
+            case 'd':
+                col = 3;
+                break;
+            case 'E':
+            case 'e':
+                col = 4;
+                break;
+            case 'F':
+            case 'f':
+                col = 5;
+                break;
+            case 'G':
+            case 'g':
+                col = 6;
+                break;
+            case 'H':
+            case 'h':
+                col = 7;
+                break;
+            case 'I':
+            case 'i':
+                col = 8;
+                break;
+            case 'J':
+            case 'j':
+                col = 9;
+                break;
+            case 'K':
+            case 'k':
+                col = 10;
+                break;
+            case 'L':
+            case 'l':
+                col = 11;
+                break;
+            case 'M':
+            case 'm':
+                col = 12;
+                break;
+            case 'N':
+            case 'n':
+                col = 13;
+                break;
+        }
+
+
+        cout << "Enter Row (1-10): ";
+        cin >> row;
+        row--;  //  decrementing the value of row as actual array is ranging from 0-9
+
+        movieSeats[record].seats[col][row] = true;
+
+        cout << "Book another seat (y/n): ";
+        cin >> choice;
+    }
+
+    writeSeatsToFile();    //  writing the seat booking details to file
+    
+    cout << "Seats booked successfully!" << endl;
+    
 }
 
 

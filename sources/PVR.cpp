@@ -32,12 +32,6 @@ int main()
 {
     clrscr();
 
-    loadWait("Kya baat hai Karode... aaeeeeiiiiittttt  xD!");
-
-    addMovieToLibrary();
-    clrscr();
-    deleteMovieFromLibary();
-
     getch();
     return 0;
 
