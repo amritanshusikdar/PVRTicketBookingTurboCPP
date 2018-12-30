@@ -19,16 +19,14 @@ class Customer
 {
     protected:
         int ID;
-        char name[20];
-        char username[10];
-        char password[9];
-        unsigned long long phone;
+        char name[20+1];
+        char username[10+1];
+        char password[10+1];
+        unsigned char phone[10+1];
         unsigned int age;
-        char ticketID[9];
+        char ticketID[8+1];
 
-        int newUserGenerator();     //  @TODO
     //  Generates random TicketIDs using 0-9 and A-Z characters
-        char* ticketIDGenerator();
 
 
     public:
@@ -38,7 +36,22 @@ class Customer
     //  Destructor : Freeing / Deallocating the memory
         ~Customer();
 
-        int getID() const
+    //  Generates new user
+        int newUserGenerator(void);
+    
+    //  Get the credentials from user
+        void askCredentials(void);
+    
+    //  Only admin can use it
+        void displayUserDetails(void);
+    
+    //  Generates an 8 digit ticketID for each ticket generated
+        char* ticketIDGenerator(void);
+    
+    //  Check how the user has logged in: Customer / Admin / Guest
+        void checkLogin(void);
+
+        int getID(void) const
         {
             return ID;
         }
@@ -104,11 +117,12 @@ class MovieSeats : public MovieDetails
 //  Customer class Function Definitions   //
 
 Customer::Customer()
-    :   ID(NULL), phone(NULL), age(NULL)
+    :   ID(NULL), age(NULL)
 {
     strcpy(name,"NULL");
     strcpy(username,"NULL");
     strcpy(password,"NULL");
+    strcpy(phone,"0000000000");
     strcpy(ticketID,"NULL");
 }
 
@@ -116,8 +130,111 @@ Customer::~Customer()
 {
     delete[] name;
     delete[] username;
-    delete[] password;
+    delete[] password;    
     delete[] ticketID;
+}
+
+void readCustomerCountFromFile(void)
+{
+    ifstream file(FILE__CUSTOMER_COUNT,ios::in);
+    file >> customerCount;
+    file.close();
+}
+
+void writeCustomerCountToFile(void)
+{
+    ofstream file;
+    file.open(FILE__CUSTOMER_COUNT,ios::out);
+
+    file << customerCount;
+
+    file.close();
+}
+
+int Customer::newUserGenerator(void)
+{
+    int i=0;    //  random helper variable
+
+    ofstream file;
+    file.open(FILE__USER_DETAILS,ios::in | ios::binary);
+
+    cout << "\t\t\t===================\n";
+    cout << "\t\t\t    YOUR DETAILS\n";
+    cout << "\t\t\t===================\n";
+
+    cout << "Your Full Name: ";
+    gets(name);
+
+    cout << "\n\nUsername: ";
+    cin >> username;
+
+    cout << "Password: ";
+    while(password[i-1] != 13)  //  while enter key is not pressed
+    {
+        password[i] = getch();
+        cout << '*';
+        i++;
+    }password[i] = NULL;
+
+    cout << "Phone number (10 digits without spaces): ";
+    cin >> phone;
+
+    cout << "Age: ";
+    cin >> age;
+
+    readCustomerCountFromFile();    
+
+    if(!customerCount)
+        ID = 100;
+    else
+        ID++;
+
+    customerCount++;
+    writeCustomerCountToFile();
+
+    file.write((char*)&*this,sizeof(this));
+    file.close();
+
+    return true;
+}
+
+
+void Customer::askCredentials(void)
+{
+    int i=0;    //  random counter variable
+
+    cout << "\t\t\t================\n";
+    cout << "\t\t\t    Login Page\n";
+    cout << "\t\t\t================\n";
+
+    cout << "\t\t\tUsername: ";
+    cin >> username;
+
+    cout << "\t\t\tPassword: ";
+    while(password[i-1] != 13)
+    {
+        password[i] = getch();
+        cout << '*';
+        i++;
+    }password[i] = NULL;
+}
+
+void Customer::displayUserDetails(void)
+{
+    ifstream file;
+    file.open(FILE__USER_DETAILS,ios::in | ios::binary);
+
+    file.read((char*)this,sizeof(this));
+
+    cout << "ID: " << ID << endl;
+    cout << "Name: " << name << endl;
+    cout << "Username: " << username << endl;
+    cout << "Password: " << password << endl;
+    cout << "Phone number: " << phone << endl;
+    cout << "Age: " << age << endl;
+    cout << "TicketID: " << ticketID << endl;
+
+    file.close();
 }
 
 string Customer::ticketIDGenerator()
@@ -135,6 +252,42 @@ string Customer::ticketIDGenerator()
 
     *(ticketID+8) = '\0';
     return ticketID;
+}
+
+void Customer::checkLogin(void)
+{
+    if(!(strcmpi(username,"admin") && strcmpi(password,"admin")))
+    {
+        loggedAsAdmin = true;
+        loggedAsUser = false;
+        loggedAsGuest = false;
+        
+        return;
+    }
+    else
+    {
+        ifstream file(FILE__USER_DETAILS,ios::in | ios::binary);
+
+        while(!file.eof())
+        {
+            file.read((char*)&*this,sizeof(this));
+
+            if(!strcmpi(username,this->username))
+            {
+                loggedAsAdmin = false;
+                loggedAsUser = true;
+                loggedAsGuest = false;
+
+                return;
+            }
+        }
+    }
+
+    loggedAsAdmin = false;
+    loggedAsUser = false;
+    loggedAsGuest = true;
+
+    cout << "You do not appear to have an account already. Logging in as Guest!\n";
 }
 
 
@@ -312,7 +465,7 @@ void writeSeatsToFile(void)
 
     for(int i = 0; i < LIMIT; i++)
         file.write((char*)&movieSeats[i],sizeof(MovieSeats));
-    file.close();    
+    file.close();
 }
 
 //  for booking the seats of particular movie

@@ -11,10 +11,11 @@
 //  Login checks --- also assigning initial values
 //  tells the login medium
 
-static int loggedAsUser = true;
-static int loggedAsAdmin = false;
+static int loggedAsAdmin = true;
+static int loggedAsUser = false;
 static int loggedAsGuest = false;
 static int index = 0;  //  check which movie index is currently being worked upon
+static int customerCount = 0;   //  keeps track of CustomerID assignment with respect to number of Customers 
 
 
 //  Typedefs

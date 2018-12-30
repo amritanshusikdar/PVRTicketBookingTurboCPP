@@ -12,33 +12,23 @@
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 
-//  C++ Library
-#include <fstream.h>
-#include <cstream.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <dos.h>
-#include <string.h>
-#include <time.h>
 
-//  Custom headers written for this project
 
-#include "admin.h"
-#include "display.h"
+//  Calling the .cpp file which is the backbone of the program  //
+
+#include "start.cpp"
 
 
 //  START OF main()
+
 int main()
 {
     clrscr();
 
+    commenceTheBusiness();
+
     getch();
     return 0;
-
-    /* @TODO:
-        after everything's done, make another header and
-        just call one function from main to commence the
-        program */
 }
 
 //  END OF main()
