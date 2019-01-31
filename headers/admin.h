@@ -25,6 +25,7 @@ class Customer
         unsigned char phone[10+1];
         unsigned int age;
         char ticketID[8+1];
+        //@TODO: multiple tickets for one user to book
 
     //  Generates random TicketIDs using 0-9 and A-Z characters
 
@@ -48,7 +49,7 @@ class Customer
     //  Generates an 8 digit ticketID for each ticket generated
         char* ticketIDGenerator(void);
     
-    //  Check how the user has logged in: Customer / Admin / Guest
+    //  Check how the user has logged in: Customer / Admin
         void checkLogin(void);
 
         int getID(void) const
@@ -195,6 +196,11 @@ int Customer::newUserGenerator(void)
     file.write((char*)&*this,sizeof(this));
     file.close();
 
+    cout << "\nYour account has been created successfully!" << endl;
+
+    loggedAsAdmin = false;
+    loggedAsUser = true;
+
     return true;
 }
 
@@ -256,15 +262,15 @@ string Customer::ticketIDGenerator()
 
 void Customer::checkLogin(void)
 {
-    if(!(strcmpi(username,"admin") && strcmpi(password,"admin")))
+    //  Checking for login as admin
+    if(!(strcmp(username,"admin") && strcmp(password,"admin")))
     {
         loggedAsAdmin = true;
         loggedAsUser = false;
-        loggedAsGuest = false;
         
         return;
     }
-    else
+    else    //  Checking for login as user
     {
         ifstream file(FILE__USER_DETAILS,ios::in | ios::binary);
 
@@ -272,11 +278,10 @@ void Customer::checkLogin(void)
         {
             file.read((char*)&*this,sizeof(this));
 
-            if(!strcmpi(username,this->username))
+            if(!strcmp(username,this->username))
             {
                 loggedAsAdmin = false;
                 loggedAsUser = true;
-                loggedAsGuest = false;
 
                 return;
             }
@@ -285,9 +290,8 @@ void Customer::checkLogin(void)
 
     loggedAsAdmin = false;
     loggedAsUser = false;
-    loggedAsGuest = true;
 
-    cout << "You do not appear to have an account already. Logging in as Guest!\n";
+    cout << "You do not appear to have an account already. Returning to Login Menu!\n";
 }
 
 

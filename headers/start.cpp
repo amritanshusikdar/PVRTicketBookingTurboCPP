@@ -12,8 +12,42 @@
 #include "admin.h"
 #include "display.h"
 
+int loginMenuChoice, adminMenuChoice, userMenuChoice;
+Customer person;
 
 void commenceTheBusiness(void)
 {
-    userAndGuestMenu();
+    loginMenuChoice = loginMenu();
+
+    if(loginMenuChoice == 1)
+    {
+        person.askCredentials();
+        person.checkLogin();
+
+        if(loggedAsAdmin)
+        {
+            adminMenuChoice = adminMenu();
+        }
+        else if(loggedAsUser)
+        {
+            userMenuChoice = userMenu();
+        }
+    }
+
+    if(loginMenuChoice == 2)
+    {
+        person.newUserGenerator();
+        commenceTheBusiness();
+    }
+
+    if(loginMenuChoice == 3)
+    {
+        customerService();
+        commenceTheBusiness();  //  Self recurring/calling function
+    }
+
+    if(loginMenuChoice == 4)
+    {
+        welcomeAndThanks(!0);
+    }
 }

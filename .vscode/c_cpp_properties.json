@@ -11,7 +11,6 @@
                 "${workspaceFolder}/BIN"
             ],
             "compilerPath": "${workspaceFolder}/BIN",
-            "cStandard": "c99",
             "cppStandard": "c++98",
             "intelliSenseMode": "clang-x64"
         }

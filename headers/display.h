@@ -25,43 +25,14 @@ int loginMenu()
 
     cout << "\n\n\n\n\n\n";
     cout << "\t\t\t*-------------------------*";
-    for(size_t i=0; i<9; i++)
-    {
-        switch(i)
-        {
-                case 0:
-                    cout << "\n\t\t\t|\t ==========\t  |";
-                break;
-
-                case 1:
-                    cout << "\n\t\t\t|\t LOGIN MENU\t  |";
-                break;
-
-                case 2:
-                    cout << "\n\t\t\t|\t ==========\t  |";
-                break;
-
-                case 4:
-                    cout << "\n\t\t\t|\t 1. Login\t  |";
-                break;
-
-                case 5:
-                    cout << "\n\t\t\t|       2. Register\t  |";
-                break;
-
-                case 6:
-                    cout << "\n\t\t\t|  3. Continue as Guest   |";
-                break;
-
-                case 7:
-                    cout << "\n\t\t\t|\t  4. Quit\t  |";
-                break;
-
-                default:
-                    cout << "\n\t\t\t|\t\t\t  |";
-        }
-    }
-
+    cout << "\n\t\t\t|\t ==========\t  |";
+    cout << "\n\t\t\t|\t LOGIN MENU\t  |";
+    cout << "\n\t\t\t|\t ==========\t  |";
+    cout << "\n\t\t\t|\t 1. Login\t  |";
+    cout << "\n\t\t\t|\t2. Register\t  |";
+    cout << "\n\t\t\t|\t3. Customer Care  |";
+    cout << "\n\t\t\t|\t  4. Quit\t  |";
+    cout << "\n\t\t\t|\t\t\t  |";
     cout << "\n\t\t\t*-------------------------*\n\n";
 
     cout << "\t\t\t   Enter your choice: ";
@@ -97,10 +68,9 @@ int loginMenu()
     return choice;
 }
 
-
+//  Menu only for the Admin
 int adminMenu()
 {
-
     clrscr();
 
     int choice, valid=false;
@@ -110,43 +80,14 @@ int adminMenu()
 
     cout << "\n\n\n\n\n\n";
     cout << "\t\t\t*-------------------------*";
-    for(size_t i=0; i<9; i++)
-    {
-        switch(i)
-        {
-                case 0:
-                    cout << "\n\t\t\t|\t ==========\t  |";
-                break;
-
-                case 1:
-                    cout << "\n\t\t\t|\t ADMIN MENU\t  |";
-                break;
-
-                case 2:
-                    cout << "\n\t\t\t|\t ==========\t  |";
-                break;
-
-                case 4:
-                    cout << "\n\t\t\t|\t1. Add Movie\t  |";
-                break;
-
-                case 5:
-                    cout << "\n\t\t\t|\t2. Delete Movie\t  |";
-                break;
-
-                case 6:
-                    cout << "\n\t\t\t|\t3. Reset Seats    |";
-                break;
-
-                case 7:
-                    cout << "\n\t\t\t|\t4. Sign Out\t  |";
-                break;
-
-                default:
-                    cout << "\n\t\t\t|\t\t\t  |";
-        }
-    }
-
+    cout << "\n\t\t\t|\t ==========\t  |";
+    cout << "\n\t\t\t|\t ADMIN MENU\t  |";
+    cout << "\n\t\t\t|\t ==========\t  |";
+    cout << "\n\t\t\t|\t\b1. Add Movie\t  |";
+    cout << "\n\t\t\t|\t\b2. Delete Movie\t  |";
+    cout << "\n\t\t\t|\t\b3. Reset Seats     |";
+    cout << "\n\t\t\t|\t\b4. Sign Out\t  |";
+    cout << "\n\t\t\t|\t\t\t  |";
     cout << "\n\t\t\t*-------------------------*\n\n";
 
     cout << "\t\t\t   Enter your choice: ";
@@ -182,9 +123,9 @@ int adminMenu()
     return choice;
 }
 
-int userAndGuestMenu()
+//  Menu for the normal User
+int userMenu()
 {
-
     clrscr();
 
     int choice, valid=false;
@@ -194,42 +135,14 @@ int userAndGuestMenu()
 
     cout << "\n\n\n\n\n\n";
     cout << "\t\t\t*-------------------------*";
-    for(size_t i=0; i<9; i++)
-    {
-        switch(i)
-        {
-                case 0:
-                    cout << "\n\t\t\t|\t ==========\t  |";
-                break;
 
-                case 1:
-                    cout << "\n\t\t\t|\t MOVIE TIME\t  |";
-                break;
-
-                case 2:
-                    cout << "\n\t\t\t|\t ==========\t  |";
-                break;
-
-                case 4:
-                    cout << "\n\t\t\t|    1. Book a Show\t  |";
-                break;
-
-                case 5:
-                    cout << "\n\t\t\t|    2. Trending Shows    |";
-                break;
-
-                case 6:
-                    cout << "\n\t\t\t|    3. My Tickets\t  |";
-                break;
-
-                case 7:
-                    cout << "\n\t\t\t|    4. Sign Out\t  |";
-                break;
-
-                default:
-                    cout << "\n\t\t\t|\t\t\t  |";
-        }
-    }
+    cout << "\n\t\t\t|\t ==========\t  |";
+    cout << "\n\t\t\t|\t MOVIE TIME\t  |";
+    cout << "\n\t\t\t|\t ==========\t  |";
+    cout << "\n\t\t\t|    1. Book a Show\t  |";
+    cout << "\n\t\t\t|    2. Trending Shows    |";
+    cout << "\n\t\t\t|    3. My Tickets\t  |";
+    cout << "\n\t\t\t|    4. Sign Out\t  |";
 
     cout << "\n\t\t\t*-------------------------*\n\n";
 
@@ -262,7 +175,6 @@ int userAndGuestMenu()
                 break;
         }
     }
-
     return choice;
 }
 
@@ -271,37 +183,20 @@ int userAndGuestMenu()
 void welcomeAndThanks(int choice)
 {
     clrscr();
-    cout << "\n\n\n\n\n\n";
+    cout << "\n\n";
     cout << "\t\t\t  *-------------------------*";
-    for(int i=0; i<4; i++)
-    {
-        switch(i)
-        {
-                case 0:
-                    cout << "\n\t\t\t  |\t  ----------\t    |";
-                break;
+    
+    cout << "\n\t\t\t  |\t  ----------\t    |";
 
-                case 1:
-                    if(choice==1) cout << "\n\t\t\t  |\t  Welcome to\t    |";
-                    else cout << "\n\t\t\t  |\t    Thanks\t    |";
-                break;
+    if(choice==1) cout << "\n\t\t\t  |\t  Welcome to\t    |";
+    else cout << "\n\t\t\t  |\t    Thanks\t    |";
 
-                case 2:
-                    if(choice==1) cout << "\n\t\t\t  |\t  PVR Cinemas\t    |";
-                    else cout << "\n\t\t\t  |\t for visiting!\t    |";
-                break;
+    if(choice==1) cout << "\n\t\t\t  |\t  PVR Cinemas\t    |";
+    else cout << "\n\t\t\t  |\t for visiting!\t    |";
 
-                case 3:
-                    cout << "\n\t\t\t  |\t  ----------\t    |";
-                break;
-
-                default:
-                    cout << "\n\t\t\t  |\t\t\t    |";
-        }
-    }
-
+    cout << "\n\t\t\t  |\t  ----------\t    |";
+    cout << "\n\t\t\t  |\t\t\t    |";
     cout << "\n\t\t\t  *-------------------------*\n\n";
-    cout << "\t\t\t    Press any key to continue.\n\n";
 
     cout << "\t\t\t######### ###      ### ######### \n";
     cout << "\t\t\t##     ### ###     ### ##     ###\n";
@@ -310,6 +205,8 @@ void welcomeAndThanks(int choice)
     cout << "\t\t\t###         ###   ###  ###   ###  \n";
     cout << "\t\t\t###          ###  ###  ###    ### \n";
     cout << "\t\t\t###           ####     ###     ###\n";
+    
+    cout << "\n\n\t\t\t    Press any key to continue.\n\n";
 
     getch();
     clrscr();
@@ -361,7 +258,7 @@ void loadWait(char *phrase)
 }
 
 
-//	for displaying booked/unbooked seats of a particular movie
+//	For displaying booked/unbooked seats of a particular movie
 void showSeats(int record)
 {
     readSeatsFromFile();	//	writing the seat details from file to cpp objects
@@ -400,9 +297,25 @@ void showSeats(int record)
 }
 
 
-void customerService()
+void customerService(void)
 {
-    //	@TODO just random email and phone numbers in a beAuTiFuL format
+    clrscr();
+
+    cout << "\t\t\t\t====================" << endl;
+    cout << "\t\t\t\t  Customer Service" << endl;
+    cout << "\t\t\t\t====================" << endl << endl << endl;
+
+    cout << "\tWe hope you liked our service. In case of any technical issues,\n"
+    "    feel free to contact us via the details given below. Your patience is much\n\t\t\t\tappreciated.\n\n";
+
+    cout << endl << endl << endl;
+    cout << "\t\t\t*---------------------------------*\n";
+    cout << "\t\t\t    Email: customercare@pvr.com" << endl;
+    cout << "\t\t\t    Call us @: +91 66990 69690,"
+            "\n\t\t\t\t       +91 69690 66990" << endl;
+    cout << "\t\t\t*---------------------------------*\n";
+
+    getch();
 }
 
 /* ~~~~~~~~~~********** END OF __DISPLAY_H__ **********~~~~~~~~~~ */

@@ -27,7 +27,6 @@ int main()
 
     commenceTheBusiness();
 
-    getch();
     return 0;
 }
 
