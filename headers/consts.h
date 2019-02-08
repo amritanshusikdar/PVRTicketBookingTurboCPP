@@ -11,7 +11,7 @@ static const char FILE__USER_DETAILS[13] = "userData.dat";
 static const char FILE__TICKET_ID_STORAGE[13] = "ticketID.dat";
 static const char FILE__MOVIES_DATABASE[11] = "movies.dat";
 static const char FILE__SEATS[10] = "seats.dat";
-static const char FILE__CUSTOMER_COUNT[13] = "customer.txt";
+static const char FILE__CUSTOMER_COUNT[18] = "customerCount.txt";
 
 static const char ticketHash[37] = "0123456789"
                             "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

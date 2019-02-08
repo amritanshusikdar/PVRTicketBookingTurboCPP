@@ -108,7 +108,7 @@ class MovieSeats : public MovieDetails
 {
     public:
         int seats[COL][ROW];    //  seats[14][10]
-        MovieSeats();
+        void resetSeats();
         ~MovieSeats();
 }movieSeats[LIMIT];
 
@@ -127,13 +127,7 @@ Customer::Customer()
     strcpy(ticketID,"NULL");
 }
 
-Customer::~Customer()
-{
-    delete[] name;
-    delete[] username;
-    delete[] password;    
-    delete[] ticketID;
-}
+Customer::~Customer(){}
 
 void readCustomerCountFromFile(void)
 {
@@ -157,7 +151,7 @@ int Customer::newUserGenerator(void)
     int i=0;    //  random helper variable
 
     ofstream file;
-    file.open(FILE__USER_DETAILS,ios::in | ios::binary);
+    file.open(FILE__USER_DETAILS,ios::app | ios::binary);
 
     cout << "\t\t\t===================\n";
     cout << "\t\t\t    YOUR DETAILS\n";
@@ -173,11 +167,19 @@ int Customer::newUserGenerator(void)
     while(password[i-1] != 13)  //  while enter key is not pressed
     {
         password[i] = getch();
-        cout << '*';
-        i++;
+        if(password[i] == 8 && i>=0)
+        {
+            cout << "\b \b";
+            i--;
+        }
+        else
+        {
+            cout << '*';
+            i++;
+        }
     }password[i] = NULL;
 
-    cout << "Phone number (10 digits without spaces): ";
+    cout << "\nPhone number (10 digits without spaces): ";
     cin >> phone;
 
     cout << "Age: ";
@@ -201,6 +203,7 @@ int Customer::newUserGenerator(void)
     loggedAsAdmin = false;
     loggedAsUser = true;
 
+    getch();
     return true;
 }
 
@@ -220,8 +223,17 @@ void Customer::askCredentials(void)
     while(password[i-1] != 13)
     {
         password[i] = getch();
-        cout << '*';
-        i++;
+        if(password[i] == 8 && i>=0)
+        {
+            cout << "\b \b";
+            i--;
+        }
+        else
+        {
+            cout << '*';
+            i++;
+        }
+        
     }password[i] = NULL;
 }
 
@@ -230,7 +242,13 @@ void Customer::displayUserDetails(void)
     ifstream file;
     file.open(FILE__USER_DETAILS,ios::in | ios::binary);
 
-    file.read((char*)this,sizeof(this));
+    if(!file)
+    {
+        cout << "\n\n ERROR: File not found!" << endl;
+        return;
+    }
+
+    file.read((char*)&*this,sizeof(this));
 
     cout << "ID: " << ID << endl;
     cout << "Name: " << name << endl;
@@ -238,9 +256,10 @@ void Customer::displayUserDetails(void)
     cout << "Password: " << password << endl;
     cout << "Phone number: " << phone << endl;
     cout << "Age: " << age << endl;
-    cout << "TicketID: " << ticketID << endl;
 
     file.close();
+
+    getch();
 }
 
 string Customer::ticketIDGenerator()
@@ -286,6 +305,7 @@ void Customer::checkLogin(void)
                 return;
             }
         }
+        file.close();
     }
 
     loggedAsAdmin = false;
@@ -306,7 +326,7 @@ MovieDetails::MovieDetails()
 
 //  MovieSeats class Function Definitions   //
 
-MovieSeats::MovieSeats()
+void MovieSeats::resetSeats()
 {
     for(int i=0; i<COL; i++)
     {
@@ -328,7 +348,7 @@ MovieSeats::~MovieSeats()
 
 void addMovieToLibrary()
 {
-    char choice, answer='n',i=0;
+    char choice, answer='n';
     int ID;
 
     ofstream file(FILE__MOVIES_DATABASE, ios::app | ios::binary);
@@ -340,11 +360,11 @@ void addMovieToLibrary()
     do
     {
         cout << "Name: ";
-        gets(adminMovies[i].name);
+        gets(adminMovies[index].name);
 
         cout << "Enter movie ID: ";
         cin >> ID;
-        adminMovies[i].setID(ID);
+        adminMovies[index].setID(ID);
 
         do
         {
@@ -352,27 +372,34 @@ void addMovieToLibrary()
             cin >> choice;
         }while(!(choice == 'y' || choice == 'Y' || choice == 'n' || choice == 'N'));
 
-        adminMovies[i].adult = (choice == 'y' || choice == 'Y') ? true : false;
+        adminMovies[index].adult = (choice == 'y' || choice == 'Y') ? true : false;
 
         do{
             cout << "How much would you rate the movie (out of 0.0 - 5.0): ";
-            cin >> (float) adminMovies[i].rate;
-        }while(!(adminMovies[i].rate >= 0.0 && adminMovies[i].rate <= 5.0));
+            cin >> (float) adminMovies[index].rate;
+        }while(!(adminMovies[index].rate >= 0.0 && adminMovies[index].rate <= 5.0));
 
         do
         {
             cout << "How's the critics (out of 0% - 100%): ";
-            cin >> adminMovies[i].critics;
-        }while(!(adminMovies[i].critics >= 0 && adminMovies[i].critics <= 100));
+            cin >> adminMovies[index].critics;
+        }while(!(adminMovies[index].critics >= 0 && adminMovies[index].critics <= 100));
 
-        file.write((char*)&adminMovies[i], sizeof(MovieDetails));
+        file.write((char*)&adminMovies[index], sizeof(MovieDetails));
 
         cout << "Movie added successfully!" << endl;
         cin.get();
+        index++;
 
         cout << "\nDo you want to add another movie(y/n): ";
         cin >> answer;
-    }while(i < LIMIT && answer == 'y' || answer == 'Y');
+    }while((index < LIMIT) && (answer == 'y' || answer == 'Y'));
+
+    if(index == LIMIT)
+    {
+        cout << "The max limit (5) for movies has been reached." << endl;
+        index--;
+    }
 
     file.close();
 }
@@ -453,7 +480,7 @@ void deleteMovieFromLibary()
 void readSeatsFromFile(void)
 {
     ifstream file;
-    file.open(FILE__SEATS,ios::in);
+    file.open(FILE__SEATS,ios::in | ios::binary);
 
     for(int i=0; i<LIMIT; i++)
         file.read((char*)&movieSeats[i],sizeof(MovieSeats));
@@ -465,10 +492,11 @@ void readSeatsFromFile(void)
 void writeSeatsToFile(void)
 {
     ofstream file;
-    file.open(FILE__SEATS,ios::out);
+    file.open(FILE__SEATS,ios::out | ios::binary);
 
     for(int i = 0; i < LIMIT; i++)
         file.write((char*)&movieSeats[i],sizeof(MovieSeats));
+
     file.close();
 }
 

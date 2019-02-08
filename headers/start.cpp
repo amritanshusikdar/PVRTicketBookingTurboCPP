@@ -17,37 +17,73 @@ Customer person;
 
 void commenceTheBusiness(void)
 {
-    loginMenuChoice = loginMenu();
+    welcomeAndThanks(!0);
 
-    if(loginMenuChoice == 1)
+    while(loginMenuChoice != 4)
     {
-        person.askCredentials();
-        person.checkLogin();
+        loginMenuChoice = loginMenu();
 
-        if(loggedAsAdmin)
+        if(loginMenuChoice == 1)
         {
-            adminMenuChoice = adminMenu();
+            person.askCredentials();
+            person.checkLogin();
+
+            if(loggedAsAdmin)
+            {
+                while(adminMenuChoice != 4)
+                {
+                    adminMenuChoice = adminMenu();
+
+                    if(adminMenuChoice == 1)
+                        addMovieToLibrary();
+                    
+                    if(adminMenuChoice == 2)
+                        deleteMovieFromLibary();
+                    
+                    if(adminMenuChoice == 3)
+                    {
+                        int number;
+                        while(!(number >= 0 && number <= 4))
+                        {
+                            cout << "\nEnter the Movie no. whose seats to be reset(0-4): ";
+                            cin >> number;
+                        }
+                        movieSeats[number].resetSeats();
+                    }
+                }
+            }
+            else if(loggedAsUser)
+            {
+                while(userMenuChoice != 4)
+                {
+                    userMenuChoice = userMenu();
+                    if(userMenuChoice == 1)
+                        //  book a show
+                        person.displayUserDetails();
+                    
+                    if(userMenuChoice == 2)
+                        person.displayUserDetails();
+                    
+                    if(userMenuChoice == 3)
+                        //  my already booked tickets
+                        person.displayUserDetails();
+                }
+            }
+            
         }
-        else if(loggedAsUser)
+        
+        if(loginMenuChoice == 2)
         {
-            userMenuChoice = userMenu();
+            person.newUserGenerator();
+            commenceTheBusiness();  //  Self recurring/calling function
+        }
+
+        if(loginMenuChoice == 3)
+        {
+            customerService();
+            commenceTheBusiness();  //  Self recurring/calling function
         }
     }
 
-    if(loginMenuChoice == 2)
-    {
-        person.newUserGenerator();
-        commenceTheBusiness();
-    }
-
-    if(loginMenuChoice == 3)
-    {
-        customerService();
-        commenceTheBusiness();  //  Self recurring/calling function
-    }
-
-    if(loginMenuChoice == 4)
-    {
-        welcomeAndThanks(!0);
-    }
+    welcomeAndThanks(0);
 }

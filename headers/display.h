@@ -140,7 +140,7 @@ int userMenu()
     cout << "\n\t\t\t|\t MOVIE TIME\t  |";
     cout << "\n\t\t\t|\t ==========\t  |";
     cout << "\n\t\t\t|    1. Book a Show\t  |";
-    cout << "\n\t\t\t|    2. Trending Shows    |";
+    cout << "\n\t\t\t|    2. My Details        |";
     cout << "\n\t\t\t|    3. My Tickets\t  |";
     cout << "\n\t\t\t|    4. Sign Out\t  |";
 
