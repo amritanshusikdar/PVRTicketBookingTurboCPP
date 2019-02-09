@@ -245,6 +245,7 @@ void Customer::displayUserDetails(void)
     if(!file)
     {
         cout << "\n\n ERROR: File not found!" << endl;
+        getch();
         return;
     }
 
@@ -282,10 +283,13 @@ string Customer::ticketIDGenerator()
 void Customer::checkLogin(void)
 {
     //  Checking for login as admin
-    if(!(strcmp(username,"admin") && strcmp(password,"admin")))
+    if(!(strcmp(username,"admin")))
     {
-        loggedAsAdmin = true;
-        loggedAsUser = false;
+        if(!(strcmp(password,"admin")))
+        {
+            loggedAsAdmin = true;
+            loggedAsUser = false;
+        }
         
         return;
     }
@@ -335,6 +339,9 @@ void MovieSeats::resetSeats()
             seats[COL][ROW] = false;    // false = 0
         }
     }
+
+    cout << "Seats have been reset successfully!" << endl;
+    getch();
 }
 
 MovieSeats::~MovieSeats()

@@ -75,13 +75,11 @@ void commenceTheBusiness(void)
         if(loginMenuChoice == 2)
         {
             person.newUserGenerator();
-            commenceTheBusiness();  //  Self recurring/calling function
         }
 
         if(loginMenuChoice == 3)
         {
             customerService();
-            commenceTheBusiness();  //  Self recurring/calling function
         }
     }
 
