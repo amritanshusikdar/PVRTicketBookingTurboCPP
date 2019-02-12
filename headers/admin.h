@@ -17,7 +17,7 @@
 //  Storing customer details
 class Customer
 {
-    protected:
+    public:
         int ID;
         char name[20+1];
         char username[10+1];
@@ -36,21 +36,12 @@ class Customer
 
     //  Destructor : Freeing / Deallocating the memory
         ~Customer();
-
-    //  Generates new user
-        int newUserGenerator(void);
     
     //  Get the credentials from user
         void askCredentials(void);
     
-    //  Only admin can use it
-        void displayUserDetails(void);
-    
     //  Generates an 8 digit ticketID for each ticket generated
         char* ticketIDGenerator(void);
-    
-    //  Check how the user has logged in: Customer / Admin
-        void checkLogin(void);
 
         int getID(void) const
         {
@@ -146,9 +137,11 @@ void writeCustomerCountToFile(void)
     file.close();
 }
 
-int Customer::newUserGenerator(void)
+//  Generates new user
+int newUserGenerator(void)
 {
     int i=0;    //  random helper variable
+    Customer person;
 
     ofstream file;
     file.open(FILE__USER_DETAILS,ios::app | ios::binary);
@@ -158,16 +151,17 @@ int Customer::newUserGenerator(void)
     cout << "\t\t\t===================\n";
 
     cout << "Your Full Name: ";
-    gets(name);
+    gets(person.name);
 
     cout << "\n\nUsername: ";
-    cin >> username;
+    cin >> person.username;
 
+    memset(person.password,0,11);  //  clearing/cleaning the entire array
     cout << "Password: ";
-    while(password[i-1] != 13)  //  while enter key is not pressed
+    while(person.password[i-1] != 13)  //  while enter key is not pressed
     {
-        password[i] = getch();
-        if(password[i] == 8 && i>=0)
+        person.password[i] = getch();
+        if(person.password[i] == 8 && i>=0)
         {
             cout << "\b \b";
             i--;
@@ -177,31 +171,28 @@ int Customer::newUserGenerator(void)
             cout << '*';
             i++;
         }
-    }password[i] = NULL;
+    }person.password[i-1] = NULL;
 
     cout << "\nPhone number (10 digits without spaces): ";
-    cin >> phone;
+    cin >> person.phone;
 
     cout << "Age: ";
-    cin >> age;
+    cin >> person.age;
 
-    readCustomerCountFromFile();    
+    readCustomerCountFromFile();
 
     if(!customerCount)
-        ID = 100;
+        person.ID = 100;
     else
-        ID++;
+        person.ID++;
 
     customerCount++;
     writeCustomerCountToFile();
 
-    file.write((char*)&*this,sizeof(this));
+    file.write((char*)&person,sizeof(Customer));
     file.close();
 
     cout << "\nYour account has been created successfully!" << endl;
-
-    loggedAsAdmin = false;
-    loggedAsUser = true;
 
     getch();
     return true;
@@ -218,7 +209,8 @@ void Customer::askCredentials(void)
 
     cout << "\t\t\tUsername: ";
     cin >> username;
-
+    
+    memset(password,0,11);  //  clearing/cleaning the entire array
     cout << "\t\t\tPassword: ";
     while(password[i-1] != 13)
     {
@@ -234,11 +226,14 @@ void Customer::askCredentials(void)
             i++;
         }
         
-    }password[i] = NULL;
+    }password[i-1] = NULL;
 }
 
-void Customer::displayUserDetails(void)
+void displayUserDetails(int ID)
 {
+    int found = false;
+    Customer person;
+
     ifstream file;
     file.open(FILE__USER_DETAILS,ios::in | ios::binary);
 
@@ -249,14 +244,28 @@ void Customer::displayUserDetails(void)
         return;
     }
 
-    file.read((char*)&*this,sizeof(this));
+    while(!file.eof() && !found)
+    {
+        file.read((char*)&person,sizeof(Customer));
 
-    cout << "ID: " << ID << endl;
-    cout << "Name: " << name << endl;
-    cout << "Username: " << username << endl;
-    cout << "Password: " << password << endl;
-    cout << "Phone number: " << phone << endl;
-    cout << "Age: " << age << endl;
+        if(ID == person.ID)
+            found = true;
+    }
+
+    if(found)
+    {
+        cout << "ID: " << person.ID << endl;
+        cout << "Name: " << person.name << endl;
+        cout << "Username: " << person.username << endl;
+        cout << "Password: " << person.password << endl;
+        cout << "Phone number: " << person.phone << endl;
+        cout << "Age: " << person.age << endl;
+    }
+    else
+    {
+       cout << "\nUnknown Error in displaying user details.\n";
+    }
+    
 
     file.close();
 
@@ -280,18 +289,17 @@ string Customer::ticketIDGenerator()
     return ticketID;
 }
 
-void Customer::checkLogin(void)
+int checkLogin(Customer person)
 {
+    Customer check;
+
     //  Checking for login as admin
-    if(!(strcmp(username,"admin")))
+    if(!strcmp(person.username,"admin") && !strcmp(person.password,"admin"))
     {
-        if(!(strcmp(password,"admin")))
-        {
-            loggedAsAdmin = true;
-            loggedAsUser = false;
-        }
+        loggedAsAdmin = true;
+        loggedAsUser = false;
         
-        return;
+        return 0;   //  0 is for admin
     }
     else    //  Checking for login as user
     {
@@ -299,14 +307,18 @@ void Customer::checkLogin(void)
 
         while(!file.eof())
         {
-            file.read((char*)&*this,sizeof(this));
+            file.read((char*)&check,sizeof(Customer));
+            cout << "FileUsername: " << check.username << endl;
+            cout << "RealUsername: " << person.username << endl;
+            getch();
 
-            if(!strcmp(username,this->username))
+            if(!strcmp(check.username,person.username) && !strcmp(check.password,person.password))
             {
                 loggedAsAdmin = false;
                 loggedAsUser = true;
-
-                return;
+                cout << "UserID: " << person.getID();
+                getch();
+                return person.getID();
             }
         }
         file.close();
@@ -315,7 +327,9 @@ void Customer::checkLogin(void)
     loggedAsAdmin = false;
     loggedAsUser = false;
 
-    cout << "You do not appear to have an account already. Returning to Login Menu!\n";
+    cout << "Sorry, no such username-password combination found.\n";
+    getch();
+    return -1;  //  Account doesn't exist
 }
 
 

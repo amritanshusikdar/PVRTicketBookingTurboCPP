@@ -12,7 +12,7 @@
 #include "admin.h"
 #include "display.h"
 
-int loginMenuChoice, adminMenuChoice, userMenuChoice;
+int loginMenuChoice, adminMenuChoice, userMenuChoice, ID;
 Customer person;
 
 void commenceTheBusiness(void)
@@ -26,7 +26,7 @@ void commenceTheBusiness(void)
         if(loginMenuChoice == 1)
         {
             person.askCredentials();
-            person.checkLogin();
+            ID = checkLogin(person);
 
             if(loggedAsAdmin)
             {
@@ -50,31 +50,31 @@ void commenceTheBusiness(void)
                         }
                         movieSeats[number].resetSeats();
                     }
-                }
+                }adminMenuChoice = false;
             }
-            else if(loggedAsUser)
+            
+            if(loggedAsUser)
             {
                 while(userMenuChoice != 4)
                 {
                     userMenuChoice = userMenu();
                     if(userMenuChoice == 1)
                         //  book a show
-                        person.displayUserDetails();
+                        displayUserDetails(ID);
                     
                     if(userMenuChoice == 2)
-                        person.displayUserDetails();
+                        displayUserDetails(ID);
                     
                     if(userMenuChoice == 3)
                         //  my already booked tickets
-                        person.displayUserDetails();
-                }
+                        displayUserDetails(ID);
+                }userMenuChoice = false;
             }
-            
         }
         
         if(loginMenuChoice == 2)
         {
-            person.newUserGenerator();
+            newUserGenerator();
         }
 
         if(loginMenuChoice == 3)
