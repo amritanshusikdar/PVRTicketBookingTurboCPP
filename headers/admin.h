@@ -246,9 +246,6 @@ void displayUserDetails(int ID)
     {
         file.read((char*)&person,sizeof(Customer));
 
-        cout << "ID: " << ID << endl;
-        cout << "person.ID: " << person.ID << endl;
-
         if(ID == person.ID)
             found = true;
     }
@@ -300,7 +297,7 @@ int checkLogin(Customer person)
         loggedAsAdmin = true;
         loggedAsUser = false;
         
-        return 0;   //  0 is for admin
+        return 69;   //  69 is for admin
     }
     else    //  Checking for login as user
     {
@@ -317,7 +314,8 @@ int checkLogin(Customer person)
             {
                 loggedAsAdmin = false;
                 loggedAsUser = true;
-                cout << "UserID: " << person.getID();
+                person.ID = check.ID;
+                cout << "UserID: " << person.getID() << endl;
                 getch();
                 return person.getID();
             }
