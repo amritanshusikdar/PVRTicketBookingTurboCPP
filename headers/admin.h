@@ -27,10 +27,6 @@ class Customer
         char ticketID[8+1];
         //@TODO: multiple tickets for one user to book
 
-    //  Generates random TicketIDs using 0-9 and A-Z characters
-
-
-    public:
     //  Constructor : Initialising the variables
         Customer();
 
@@ -184,10 +180,12 @@ int newUserGenerator(void)
     if(!customerCount)
         person.ID = 100;
     else
-        person.ID++;
-
+        person.ID = customerCount + 100;
+    
     customerCount++;
     writeCustomerCountToFile();
+    cout << "customerCount: " << customerCount << endl;
+    cout << "person.ID: " << person.ID << endl;
 
     file.write((char*)&person,sizeof(Customer));
     file.close();
@@ -247,6 +245,9 @@ void displayUserDetails(int ID)
     while(!file.eof() && !found)
     {
         file.read((char*)&person,sizeof(Customer));
+
+        cout << "ID: " << ID << endl;
+        cout << "person.ID: " << person.ID << endl;
 
         if(ID == person.ID)
             found = true;
