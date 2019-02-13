@@ -80,13 +80,11 @@ class MovieDetails
 
         void showMovies()
         {
-            gotoxy(1,9);
+            gotoxy(5,9);
             cout << "Name: " << name << "      " << endl;   // extra spaces for cleaning previously printed characters
             cout << "Adult: " << (adult ? "Yes" : "No") << "      " << endl;    // extra spaces for cleaning previously printed characters
             cout << "Rate: " << (float) rate << endl;
             cout << "Critics: " << critics << "      " << endl;
-
-            gotoxy(9,7);
         }
 }adminMovies[LIMIT];
 
@@ -512,7 +510,6 @@ void readSeatsFromFile(void)
 
     for(int i=0; i<LIMIT; i++)
         file.read((char*)&movieSeats[i],sizeof(MovieSeats));
-
     file.close();
 }
 
@@ -524,7 +521,6 @@ void writeSeatsToFile(void)
 
     for(int i = 0; i < LIMIT; i++)
         file.write((char*)&movieSeats[i],sizeof(MovieSeats));
-
     file.close();
 }
 
@@ -536,7 +532,7 @@ void bookSeats(int record)
 
     while(choice != 'n')
     {
-        cout << "\n\n\n\n\nEnter Column (A-N): ";
+        cout << "\n\nEnter Column (A-N): ";
         cin >> charCol;
 
         //  Assigning numerical value according to A=0, B=1 ... N = 13
@@ -634,19 +630,13 @@ void showSeats(int record)
         for(int j=0; j<10; j++)
         {
                 if(i==0)
-                {
                     cout << j+1 << "  ";
-                }
                 else
                 {
                     if(movieSeats[record].seats[i-1][j])	//	if the particular seat is booked
-                    {
                         cout << "  " << char(4);
-                    }
                     else	//	if the particular seat ain't booked
-                    {
                         cout << "  " << char(127);
-                    }
                 }
         } cout << endl << "\t\t\t";
 
@@ -777,7 +767,10 @@ void showMyTicket(int ID)
     }file.close();
 
     if(!strcmp(person.ticketID,"NULL"))
+    {
         cout << "\nYou haven't booked any tickets yet!" << endl;
+        getch();
+    }
     else
     {
         //  For checking the movie the user has booked the ticket for
@@ -790,9 +783,14 @@ void showMyTicket(int ID)
                 break;
         }file.close();
 
+        clrscr();
+
+        cout << "\nMy ticket ID is: " << person.ticketID << endl;
+
         movie.showMovies();
         getch();
-        showSeats(track);
+        cout << "\nThe booked seats are as follows: " << endl;
+        showSeats(track-1);
         getch();
     }
 }

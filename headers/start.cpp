@@ -17,6 +17,7 @@ Customer person;
 
 void commenceTheBusiness(void)
 {
+    loadWait("PVR Movie Ticket Booking");
     welcomeAndThanks(!0);
 
     while(loginMenuChoice != 4)
