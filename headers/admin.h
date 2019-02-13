@@ -25,7 +25,7 @@ class Customer
         unsigned char phone[10+1];
         unsigned int age;
         char ticketID[8+1];
-        //@TODO: multiple tickets for one user to book
+        int movieID;    //  To keep tract of which movie the user has booked the ticket for
 
     //  Constructor : Initialising the variables
         Customer();
@@ -37,7 +37,7 @@ class Customer
         void askCredentials(void);
     
     //  Generates an 8 digit ticketID for each ticket generated
-        char* ticketIDGenerator(void);
+        string ticketIDGenerator(void);
 
         int getID(void) const
         {
@@ -105,7 +105,7 @@ class MovieSeats : public MovieDetails
 //  Customer class Function Definitions   //
 
 Customer::Customer()
-    :   ID(NULL), age(NULL)
+    :   ID(NULL), age(NULL), movieID(NULL)
 {
     strcpy(name,"NULL");
     strcpy(username,"NULL");
@@ -184,8 +184,6 @@ int newUserGenerator(void)
     
     customerCount++;
     writeCustomerCountToFile();
-    cout << "customerCount: " << customerCount << endl;
-    cout << "person.ID: " << person.ID << endl;
 
     file.write((char*)&person,sizeof(Customer));
     file.close();
@@ -306,17 +304,12 @@ int checkLogin(Customer person)
         while(!file.eof())
         {
             file.read((char*)&check,sizeof(Customer));
-            cout << "FileUsername: " << check.username << endl;
-            cout << "RealUsername: " << person.username << endl;
-            getch();
 
             if(!strcmp(check.username,person.username) && !strcmp(check.password,person.password))
             {
                 loggedAsAdmin = false;
                 loggedAsUser = true;
                 person.ID = check.ID;
-                cout << "UserID: " << person.getID() << endl;
-                getch();
                 return person.getID();
             }
         }
@@ -326,7 +319,7 @@ int checkLogin(Customer person)
     loggedAsAdmin = false;
     loggedAsUser = false;
 
-    cout << "Sorry, no such username-password combination found.\n";
+    cout << "\nSorry, no such username-password combination found.\n";
     getch();
     return -1;  //  Account doesn't exist
 }
@@ -357,19 +350,14 @@ void MovieSeats::resetSeats()
     getch();
 }
 
-MovieSeats::~MovieSeats()
-{
-    delete[] seats;
-}
-
-
-
 //   Custom functions   //
 
 void addMovieToLibrary()
 {
     char choice, answer='n';
     int ID;
+
+    index = 0;
 
     ofstream file(FILE__MOVIES_DATABASE, ios::app | ios::binary);
 
@@ -427,11 +415,15 @@ void addMovieToLibrary()
 
 void deleteMovieFromLibary()
 {
-    char choice;
-    int upto;
+    index = 0;
 
-    fstream readingFile(FILE__MOVIES_DATABASE, ios::in | ios::binary);
-    fstream writingFile;
+    char choice;
+    int upto=0;
+
+    ifstream readingFile(FILE__MOVIES_DATABASE, ios::in | ios::binary);
+    ofstream writingFile;
+
+    clrscr();
 
     cout << "\t\t\t    =====================\n";
     cout << "\t\t\t       AVAILABLE MOVIES\n";
@@ -450,49 +442,65 @@ void deleteMovieFromLibary()
         upto = index;
         index++;
     }
+    index=0;
+    upto--;
     readingFile.close();
 
     cout << "Navigation controls: Press 'n' for next and 'p' for previous.\n"
             "Press 'd' to delete the current movie and 'x' to exit.\n\n";
     
-    cout << "Choice: ";    
+    cout << "Choice: ";
     while(choice != 'x')
     {   
-        choice = getche();
-        if(choice == 'n')
-        {
-            index++;
-            if(index >= upto)
-                index = upto-1;
+        choice = getch();
 
-            adminMovies[index].showMovies();                       
+        if(upto <= -1)
+        {
+            cout << "No movies to show. " << endl;
+            getch();
+            choice = 'x';
         }
-
-        if(choice == 'p')
+        else
         {
-            index--;
-            if(index <= 0)
-                index = 0;
-
-            adminMovies[index].showMovies();
-        }
-
-        if(choice == 'd')
-        {
-            writingFile.open("TEMP.DAT", ios::out | ios::binary);
-            for(int i=0; i <= upto; i++)
+            if(choice == 'n')
             {
-                if(i != index)
-                    writingFile.write((char*)&adminMovies[i],sizeof(MovieDetails));
+                index++;
+                if(index > upto)
+                    index = upto;
+
+                adminMovies[index].showMovies();                       
             }
-            writingFile.close();
 
-            remove(FILE__MOVIES_DATABASE);
-            system("rename TEMP.DAT movies.dat");
+            if(choice == 'p')
+            {
+                index--;
+                if(index < 0)
+                    index = 0;
 
-            cout << "Movie deleted successfully!";
-            gotoxy(9,7);
+                adminMovies[index].showMovies();
+            }
+
+            if(choice == 'd')
+            {
+                writingFile.open("TEMP.DAT", ios::out | ios::binary);
+                for(int i=0; i <= upto; i++)
+                {
+                    if(i != index)
+                        writingFile.write((char*)&adminMovies[i],sizeof(MovieDetails));
+                }
+                writingFile.close();
+
+                remove(FILE__MOVIES_DATABASE);
+                system("rename TEMP.DAT movies.dat");
+
+                cout << "\nMovie deleted successfully!";
+
+                getch();
+
+                break;
+            }
         }
+        
     }
 }
 
@@ -528,7 +536,7 @@ void bookSeats(int record)
 
     while(choice != 'n')
     {
-        cout << "Enter Column (A-N): ";
+        cout << "\n\n\n\n\nEnter Column (A-N): ";
         cin >> charCol;
 
         //  Assigning numerical value according to A=0, B=1 ... N = 13
@@ -606,11 +614,188 @@ void bookSeats(int record)
 
     writeSeatsToFile();    //  writing the seat booking details to file
     
-    cout << "Seats booked successfully!" << endl;
-    
+    cout << "\nSeats booked successfully!" << endl;   
 }
 
+//	For displaying booked/unbooked seats of a particular movie
+void showSeats(int record)
+{
+    readSeatsFromFile();	//	writing the seat details from file to cpp objects
 
+    char alphabet = 'A';
+
+    cout << "\n\n\n\n\n\n\n\n";
+    cout << "\t\t       ";
+
+    cout << '-' << char(197) << "- ";
+
+    for(int i=0; i<15; i++)
+    {
+        for(int j=0; j<10; j++)
+        {
+                if(i==0)
+                {
+                    cout << j+1 << "  ";
+                }
+                else
+                {
+                    if(movieSeats[record].seats[i-1][j])	//	if the particular seat is booked
+                    {
+                        cout << "  " << char(4);
+                    }
+                    else	//	if the particular seat ain't booked
+                    {
+                        cout << "  " << char(127);
+                    }
+                }
+        } cout << endl << "\t\t\t";
+
+        if(i<=13)
+            cout << alphabet++;
+    }
+}
+
+//  function to book a movie for a specific userID
+void bookMovie(int ID)
+{
+    index = 0;
+    Customer person;
+    char choice;
+    int upto=0, move=0;
+
+    ifstream readingFile;
+    ofstream writingFile;
+
+    clrscr();
+
+    cout << "\t\t\t    =====================\n";
+    cout << "\t\t\t       AVAILABLE MOVIES\n";
+    cout << "\t\t\t    =====================\n";
+
+    readingFile.open(FILE__MOVIES_DATABASE, ios::in | ios::binary);
+    if(!readingFile)
+    {
+        cout << "File not found!" << endl;
+        getch();
+        return;
+    }
+
+    while(!readingFile.eof())
+    {
+        readingFile.read((char*)&adminMovies[index],sizeof(MovieDetails));
+        upto = index;
+        index++;
+    }
+    index=0;
+    upto--;
+    readingFile.close();
+
+    cout << "Navigation controls: Press 'n' for next and 'p' for previous.\n"
+            "Press 's' to select the current movie and 'x' to exit.\n\n";
+    
+    cout << "Choice: ";
+    while(choice != 'x')
+    {   
+        choice = getch();
+
+        if(upto <= -1)
+        {
+            cout << "No movies to show. " << endl;
+            getch();
+            choice = 'x';
+        }
+        else
+        {
+            if(choice == 'n')
+            {
+                index++;
+                if(index > upto)
+                    index = upto;
+
+                adminMovies[index].showMovies();                       
+            }
+
+            if(choice == 'p')
+            {
+                index--;
+                if(index < 0)
+                    index = 0;
+
+                adminMovies[index].showMovies();
+            }
+
+            if(choice == 's')
+            {
+                readingFile.open(FILE__USER_DETAILS,ios::in|ios::binary);
+                while(!readingFile.eof())
+                {
+                    readingFile.read((char*)&person,sizeof(person));
+                    if(person.ID == ID)
+                        break;
+                }
+                readingFile.close();
+
+                strcpy(person.ticketID,person.ticketIDGenerator());   //  assigning ticketID to the user booking the movie
+                person.movieID = adminMovies[index].getID();
+                
+                writingFile.open(FILE__USER_DETAILS,ios::out|ios::binary);
+                if(ID==0) move=0; else move = ((ID%100)-1) * sizeof(person);
+                writingFile.seekp(move,ios::beg);
+                writingFile.write((char*)&person,sizeof(person));
+                writingFile.close();
+
+                readSeatsFromFile();
+                bookSeats(index);
+                writeSeatsToFile();
+
+                cout << "\nMovie booked successfully!";
+
+                getch();
+
+                break;
+            }
+        }
+        
+    }
+}
+
+//  To display details about the user's booked ticket
+void showMyTicket(int ID)
+{
+    Customer person;
+    MovieDetails movie;
+    ifstream file;
+    int track=0;
+    
+    //  For reading the user details
+    file.open(FILE__USER_DETAILS,ios::in|ios::binary);
+    while(!file.eof())
+    {
+        file.read((char*)&person,sizeof(person));
+        if(ID == person.ID)
+            break;
+    }file.close();
+
+    if(!strcmp(person.ticketID,"NULL"))
+        cout << "\nYou haven't booked any tickets yet!" << endl;
+    else
+    {
+        //  For checking the movie the user has booked the ticket for
+        file.open(FILE__MOVIES_DATABASE,ios::in|ios::binary);
+        while(!file.eof())
+        {
+            track++;      
+            file.read((char*)&movie,sizeof(movie));
+            if(movie.getID() == person.movieID)
+                break;
+        }file.close();
+
+        movie.showMovies();
+        getch();
+        showSeats(track);
+        getch();
+    }
+}
 
 /* ~~~~~~~~~~********** END OF __ADMIN_H__ **********~~~~~~~~~~ */
 

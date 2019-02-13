@@ -257,46 +257,6 @@ void loadWait(char *phrase)
     delay(100);
 }
 
-
-//	For displaying booked/unbooked seats of a particular movie
-void showSeats(int record)
-{
-    readSeatsFromFile();	//	writing the seat details from file to cpp objects
-
-    char alphabet = 'A';
-
-    cout << "\n\n\n\n\n\n\n\n";
-    cout << "\t\t       ";
-
-    cout << '-' << char(197) << "- ";
-
-    for(int i=0; i<15; i++)
-    {
-        for(int j=0; j<10; j++)
-        {
-                if(i==0)
-                {
-                    cout << j+1 << "  ";
-                }
-                else
-                {
-                    if(movieSeats[record].seats[i-1][j])	//	if the particular seat is booked
-                    {
-                        cout << "  " << char(4);
-                    }
-                    else	//	if the particular seat ain't booked
-                    {
-                        cout << "  " << char(127);
-                    }
-                }
-        } cout << endl << "\t\t\t";
-
-        if(i<=13)
-            cout << alphabet++;
-    }
-}
-
-
 void customerService(void)
 {
     clrscr();

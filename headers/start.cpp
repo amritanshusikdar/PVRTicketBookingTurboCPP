@@ -60,14 +60,15 @@ void commenceTheBusiness(void)
                     userMenuChoice = userMenu();
                     if(userMenuChoice == 1)
                         //  book a show
-                        displayUserDetails(ID);
+                        bookMovie(ID);
                     
                     if(userMenuChoice == 2)
                         displayUserDetails(ID);
                     
                     if(userMenuChoice == 3)
                         //  my already booked tickets
-                        displayUserDetails(ID);
+                        showMyTicket(ID);
+
                 }userMenuChoice = false;
             }
         }

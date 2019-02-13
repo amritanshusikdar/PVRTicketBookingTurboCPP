@@ -16,11 +16,6 @@ static int loggedAsUser = false;
 static int index = 0;  //  check which movie index is currently being worked upon
 static int customerCount = 0;   //  keeps track of CustomerID assignment with respect to number of Customers 
 
-
-//  Typedefs
-
-typedef char* string;
-
 /* ~~~~~~~~~~********** END OF __GLOBALS_H__ **********~~~~~~~~~~ */
 
 #endif
